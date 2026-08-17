@@ -1,0 +1,39 @@
+---
+import "../styles/global.css";
+import campaign from "../../campaign.config";
+
+const title = campaign.name;
+const description = campaign.tagline;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? campaign.siteUrl).href;
+
+// Inject the campaign's accent colors as CSS custom properties so the single
+// config file drives the theme without a build step or CSS edits.
+const themeVars = `--accent:${campaign.theme.accent};--on-accent:${campaign.theme.onAccent};`;
+---
+
+<!doctype html>
+<html lang={campaign.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="color-scheme" content="light" />
+
+    <!-- Social-share preview. Drop an image at public/og.png to enable the card. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href={`${campaign.base}favicon.svg`} type="image/svg+xml" />
+    <style set:html={`:root{${themeVars}}`}></style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot />
+  </body>
+</html>
+

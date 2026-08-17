@@ -1,0 +1,58 @@
+---
+import campaign from "../../campaign.config";
+const { donate } = campaign;
+
+// Precedence: a pasted processor embed wins; otherwise a link-button to a
+// processor-hosted donate page; otherwise a clearly-marked placeholder so an
+// unfinished site is obvious. This kit never handles card data itself — the
+// widget/link is hosted entirely by the processor.
+const hasEmbed = Boolean(donate.embedHtml && donate.embedHtml.trim());
+const hasButton = Boolean(donate.buttonUrl && donate.buttonUrl.trim());
+---
+
+<section id="donate" aria-labelledby="donate-heading">
+  <div class="container">
+    <h2 id="donate-heading">{donate.heading}</h2>
+    {donate.blurb && <p class="muted">{donate.blurb}</p>}
+
+    {
+      hasEmbed ? (
+        // Rendered verbatim from your processor account (see campaign.config.ts).
+        <div class="embed-slot" set:html={donate.embedHtml} />
+      ) : hasButton ? (
+        <p class="embed-slot">
+          <a class="btn" href={donate.buttonUrl} rel="noopener">
+            {donate.buttonLabel || "Donate"}
+          </a>
+        </p>
+      ) : (
+        <p class="notice">
+          <strong>Donate widget not configured yet.</strong> Set{" "}
+          <code>donate.embedHtml</code> or <code>donate.buttonUrl</code> in{" "}
+          <code>campaign.config.ts</code>.
+        </p>
+      )
+    }
+
+    {
+      donate.processorName && (hasEmbed || hasButton) && (
+        <p class="muted small">
+          Payments are handled securely by {donate.processorName}. This site
+          never sees your card details.
+        </p>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .small {
+    font-size: 0.9rem;
+    margin-top: 0.75rem;
+  }
+  code {
+    background: var(--bg-alt);
+    padding: 0.1rem 0.3rem;
+    border-radius: 4px;
+  }
+</style>
