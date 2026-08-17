@@ -1,0 +1,13 @@
+{
+  "//": "Accessibility gate for the built site. `npm run build` first, then this",
+  "//2": "serves ./dist and checks each URL against WCAG2AA. CI runs it too.",
+  "defaults": {
+    "standard": "WCAG2AA",
+    "runners": ["axe", "htmlcs"],
+    "timeout": 30000,
+    "chromeLaunchConfig": {
+      "args": ["--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage"]
+    }
+  },
+  "urls": ["http://127.0.0.1:4321/"]
+}

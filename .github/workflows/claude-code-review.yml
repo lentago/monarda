@@ -33,8 +33,27 @@ jobs:
     secrets: inherit
     with:
       review_prompt: |
-        REPLACE THIS PLACEHOLDER. Describe what THIS repository is (one or two
-        sentences), then list the 4–6 dimensions the reviewer should focus on,
-        each as a bolded category with a short explanation. Tailor to the
-        repo's actual content (e.g. Terraform/AWS, HA YAML, bash scripts,
-        markdown prose, Python). See the fleet for working examples.
+        This repo (monarda) is the Lentago Labs campaign-site kit: a GitHub
+        template repo whose files are copied verbatim into a CLIENT's own repo.
+        It is a minimal static Astro site (Astro components + one
+        `campaign.config.ts`), two deploy workflows (GitHub Pages and S3/
+        CloudFront via OIDC), and client-facing docs (INTAKE, DRY-RUN, README).
+        Review with these dimensions:
+
+        - **Client-context correctness** — every file is copied into a client
+          repo, so flag anything that only makes sense inside Lentago, broken
+          references, or leftover placeholders that would ship to a client.
+        - **Payments / PCI safety** — the kit must NEVER collect or transmit
+          card data; donations must stay a processor-hosted embed or link. Flag
+          any code path that renders a card input or handles payment data.
+        - **Config-driven design** — new campaign content should flow through
+          `campaign.config.ts`, not hard-coded source. Flag settings a client
+          would have to edit source files to change.
+        - **Accessibility & performance** — semantic HTML, landmarks, skip link,
+          visible focus, WCAG 2 AA (pa11y gate), system fonts, no trackers, no
+          required client JS. Flag regressions.
+        - **Supply-chain / secrets** — third-party GitHub Actions must be
+          SHA-pinned with a version comment; there must be NO long-lived AWS
+          keys (OIDC only). Flag unpinned actions or static credentials.
+        - **Docs accuracy** — INTAKE/DRY-RUN/README must match the actual config
+          fields, workflows, and deploy steps.

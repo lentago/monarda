@@ -1,0 +1,48 @@
+---
+import campaign from "../../campaign.config";
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <a class="brand" href={campaign.base}>{campaign.name}</a>
+    <nav aria-label="Primary">
+      <a href="#story">Story</a>
+      <a href="#donate">Donate</a>
+      <a href="#contact">Get involved</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    padding-block: 0.85rem;
+  }
+  .brand {
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  nav {
+    display: flex;
+    gap: 1.1rem;
+    flex-wrap: wrap;
+  }
+  nav a {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  nav a:hover {
+    text-decoration: underline;
+  }
+</style>

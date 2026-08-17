@@ -1,0 +1,33 @@
+---
+import campaign from "../../campaign.config";
+const { story } = campaign;
+---
+
+<section id="story" class="alt" aria-labelledby="story-heading">
+  <div class="container">
+    <h2 id="story-heading">{story.heading}</h2>
+    {
+      story.blocks.map((block) => (
+        <div class="block">
+          {block.heading && <h3>{block.heading}</h3>}
+          {block.paragraphs.map((p) => (
+            <p>{p}</p>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .block {
+    margin-top: 1.75rem;
+  }
+  .block h3 {
+    margin-bottom: 0.4rem;
+  }
+  .block p {
+    margin-block: 0.6rem;
+    max-width: 40rem;
+  }
+</style>

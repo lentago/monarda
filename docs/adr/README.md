@@ -1,22 +1,21 @@
 # Architecture decision records
 
-The decisions below were reconstructed on 2026-08-13 from **this template repository's own**
-commit history, merged pull requests, and CLAUDE.md contents. Dates in each record reflect the
-original decision date, not the reconstruction date. Evidence anchors (PR numbers, file lines)
-have been verified against the current repo state; anything that could not be confirmed is marked
-uncertain.
+The decisions below record why monarda — the Lentago Labs campaign-site kit — is
+built the way it is. They are the kit's own design decisions, not decisions about
+any one campaign that uses it.
 
-> **Scaffolding note — for repos created from this template:** ADRs 0001/0002 and their index
-> rows document the template repo itself, not your new repo. On setup (see `SETUP.md`), delete
-> those two records and their rows, keep this file as your repo's ADR log, and use the format
-> guide below for your own decisions.
+> **For repos created from this template:** these ADRs document the kit itself.
+> Your campaign is welcome to keep them as background and add its own decisions
+> below (custom domain choice, processor choice, and so on), or start a fresh log
+> — either way, use the format guide below.
 
 ## Index
 
 | ADR | Title | Status | Date |
 |---|---|---|---|
-| [0001](0001-template-as-file-scaffold.md) | Template repo carries files; org settings are applied externally | Accepted | 2026-06-14 |
-| [0002](0002-governance-baked-in-structurally.md) | Template ships governance as structure, not convention | Accepted | 2026-06-14 |
+| [0001](0001-client-owned-delivery.md) | Deploy into the client's own account, never Lentago-hosted | Accepted | 2026-08-17 |
+| [0002](0002-processor-hosted-payments-only.md) | Donations go through a processor-hosted widget; the kit never touches card data | Accepted | 2026-08-17 |
+| [0003](0003-pages-default-s3-opt-in.md) | GitHub Pages is the default deploy; S3 + CloudFront is the opt-in paid variant | Accepted | 2026-08-17 |
 
 ---
 

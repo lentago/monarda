@@ -1,0 +1,96 @@
+---
+import campaign from "../../campaign.config";
+import { progressPercent } from "../config";
+
+const { name, tagline, hero, goal, raised, deadline } = campaign;
+const headline = hero.headline?.trim() || name;
+const percent = progressPercent(campaign);
+---
+
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="container">
+    <p class="tagline">{tagline}</p>
+    <h1 id="hero-heading">{headline}</h1>
+    <p class="subhead">{hero.subhead}</p>
+
+    <dl class="stats">
+      <div>
+        <dt>Goal</dt>
+        <dd>{goal}</dd>
+      </div>
+      {
+        raised && (
+          <div>
+            <dt>Raised</dt>
+            <dd>{raised}</dd>
+          </div>
+        )
+      }
+      <div>
+        <dt>Deadline</dt>
+        <dd>{deadline}</dd>
+      </div>
+    </dl>
+
+    {
+      percent !== null && (
+        <div
+          class="meter"
+          role="progressbar"
+          aria-valuenow={percent}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label={`${percent}% of the ${goal} goal raised`}
+        >
+          <span style={`width:${percent}%`} />
+        </div>
+      )
+    }
+
+    <p class="cta">
+      <a class="btn" href="#donate">{hero.ctaLabel}</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(3rem, 8vw, 5rem);
+  }
+  .tagline {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 0 0 0.5rem;
+  }
+  .subhead {
+    font-size: 1.2rem;
+    color: var(--muted);
+    max-width: 38rem;
+  }
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem 2.5rem;
+    margin: 1.75rem 0 0;
+  }
+  .stats div {
+    margin: 0;
+  }
+  .stats dt {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+  }
+  .stats dd {
+    margin: 0.1rem 0 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  .cta {
+    margin-top: 1.75rem;
+  }
+</style>

@@ -1,0 +1,23 @@
+{
+  "name": "campaign-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A fast, static campaign site. Edit campaign.config.ts and deploy.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "a11y": "pa11y-ci --config .pa11yci.json"
+  },
+  "dependencies": {
+    "astro": "^5.13.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "pa11y-ci": "^3.1.0",
+    "typescript": "^5.9.3"
+  }
+}

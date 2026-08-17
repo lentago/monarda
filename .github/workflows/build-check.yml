@@ -1,0 +1,57 @@
+# ============================================================================
+# build-check — the site compiles, type-checks, and passes an a11y gate
+# ============================================================================
+# Runs on every pull request that touches the site. Three gates, cheapest
+# first: `astro check` (types), `astro build` (it compiles), and pa11y-ci
+# (WCAG 2 AA on the built HTML, config in .pa11yci.json).
+#
+# This is NOT wired as a required status check by default — it is path-filtered
+# so it only runs when site files change, and a path-filtered required check
+# that never fires would deadlock docs-only PRs (the lesson in docs-check.yml).
+# If you make it required, remove the `paths:` filter first.
+#
+# Third-party actions are pinned to a full commit SHA; the trailing comment
+# records the version each SHA maps to.
+# ============================================================================
+
+name: build-check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - "src/**"
+      - "public/**"
+      - "campaign.config.ts"
+      - "astro.config.ts"
+      - "tsconfig.json"
+      - "package.json"
+      - "package-lock.json"
+      - ".pa11yci.json"
+      - ".github/workflows/build-check.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Setup Node
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Type check
+        run: npm run check
+      - name: Build
+        run: npm run build
+      - name: Accessibility check (WCAG 2 AA)
+        run: |
+          npx astro preview --port 4321 --host 127.0.0.1 &
+          for i in $(seq 1 30); do
+            curl -sf http://127.0.0.1:4321/ >/dev/null && break
+            sleep 1
+          done
+          npm run a11y

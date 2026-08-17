@@ -1,0 +1,33 @@
+---
+import campaign from "../../campaign.config";
+const { contact } = campaign;
+
+const hasEmail = Boolean(contact.email && contact.email.trim());
+const hasForm = Boolean(contact.formEmbedHtml && contact.formEmbedHtml.trim());
+
+const mailto = hasEmail
+  ? `mailto:${contact.email}` +
+    (contact.emailSubject ? `?subject=${encodeURIComponent(contact.emailSubject)}` : "")
+  : null;
+---
+
+{
+  (hasEmail || hasForm) && (
+    <section id="contact" class="alt" aria-labelledby="contact-heading">
+      <div class="container">
+        <h2 id="contact-heading">{contact.heading}</h2>
+        {contact.blurb && <p class="muted">{contact.blurb}</p>}
+
+        {hasEmail && (
+          <p>
+            <a class="btn secondary" href={mailto}>
+              Email us
+            </a>
+          </p>
+        )}
+
+        {hasForm && <div class="embed-slot" set:html={contact.formEmbedHtml} />}
+      </div>
+    </section>
+  )
+}
