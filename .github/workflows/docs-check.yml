@@ -1,22 +1,13 @@
 # ============================================================================
 # docs-check — relative markdown link resolution
 # ============================================================================
-# Self-contained: the checker (ci/check_docs_links.py) is vendored into this
-# repo, not pulled from lentago/shared-workflows. Client copies of this
-# template have no relationship with that org, so kit workflows carry zero
-# cross-org refs (fleet decision 2026-08-19, "inline for kits, pin for
-# fleet"). Scans every markdown file in the repo, not just the diff, so a
-# rename/deletion elsewhere in the tree still gets caught.
+# Thin wrapper around lentago/shared-workflows/docs-check.yml.
 #
 # Deliberately NOT path-filtered: this is built to serve as a required status
 # check, and a required check whose workflow never triggers is held "Expected"
-# forever, deadlocking every non-matching PR. The job skips fast when the PR
-# touches no markdown.
-#
-# The job `name:` is set to "docs-check / docs-check" — the exact context the
-# old reusable-workflow wrapper reported (verified against this repo's PR #1
-# check-run history) — so the required status check keeps matching without
-# touching the branch ruleset.
+# forever, deadlocking every non-matching PR (the hard rule in
+# fleet-ops/required-checks.json). The checker is cheap and skips fast when no
+# markdown changed.
 #
 # Origin: lentago/.github#57 — docs-only PRs merged having asserted nothing,
 # and renames/removals are the fleet's most common cause of broken links.
@@ -30,24 +21,4 @@ on:
 
 jobs:
   docs-check:
-    name: docs-check / docs-check
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          fetch-depth: 2
-
-      - name: Skip if no markdown changed
-        id: changed
-        run: |
-          if git diff --name-only HEAD^1 HEAD | grep -q '\.md$'; then
-            echo "run=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "run=false" >> "$GITHUB_OUTPUT"
-            echo "No markdown files changed; skipping link check."
-          fi
-
-      - name: Check relative markdown links
-        if: steps.changed.outputs.run == 'true'
-        run: python3 ci/check_docs_links.py
+    uses: lentago/shared-workflows/.github/workflows/docs-check.yml@main
