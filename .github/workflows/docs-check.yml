@@ -7,6 +7,12 @@
 # a required check whose workflow never triggers is held "Expected" forever,
 # deadlocking every non-matching PR. The checker is cheap and skips fast when
 # no markdown changed.
+#
+# The job's `name:` is pinned to "docs-check / docs-check" — the exact
+# required-status-check context recorded in this repo's branch ruleset (a
+# holdover from when this job called a reusable workflow, which GitHub
+# Actions reports as "<caller job> / <called job>"). Changing it deadlocks
+# every PR until the ruleset is updated to match.
 # ============================================================================
 
 name: docs-check
@@ -17,6 +23,7 @@ on:
 
 jobs:
   docs-check:
+    name: docs-check / docs-check
     runs-on: ubuntu-latest
     permissions:
       contents: read
