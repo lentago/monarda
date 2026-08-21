@@ -31,6 +31,9 @@ This README has two readers. Jump to yours:
 
 ## For the client — what you get, and what you own
 
+**New here?** Start with [`ADOPTION.md`](ADOPTION.md) — it covers prerequisites,
+the intake questionnaire, the deploy drill, and teardown in one place.
+
 **What you get:** a single-page campaign site with four sections — a hero (name,
 tagline, goal, deadline, and an optional progress bar), your story, a **donate**
 button/widget hosted by your payment processor, and a **contact / volunteer**
