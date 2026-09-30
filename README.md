@@ -9,9 +9,9 @@
 # monarda — campaign-site kit
 
 A ready-to-run **fundraising campaign website**: a fast, static, accessible
-landing page you configure by editing **one file**, plus workflows that deploy it
-to **your own** GitHub Pages or AWS account. No servers to run, no card data to
-handle, nothing hosted by anyone else.
+page you set up by editing **one file**. Workflows deploy it to **your own**
+GitHub Pages or AWS account — no server to run, no card data to handle, and
+nothing hosted by anyone but you.
 
 **Authorship:** The code, prompts, and documentation in this repo are co-written
 with [Claude](https://claude.ai) (Anthropic). I direct the work and review the
@@ -20,25 +20,29 @@ software engineer — please don't read this repo as a portfolio of coding abili
 
 ---
 
-This README has two readers. Jump to yours:
+This README has two readers. Find yours:
 
-- **[For the client](#for-the-client--what-you-get-and-what-you-own)** — you're
-  running the campaign and this site is yours.
+- **[For the client](#for-the-client--what-you-get-and-what-you-own)** — this
+  is your campaign, and this site will be yours.
 - **[For the operator](#for-the-operator--running-the-dry-run)** — you're
-  standing the site up for a campaign.
+  standing the site up for someone else's campaign.
 
 ---
 
 ## For the client — what you get, and what you own
 
-**New here?** Start with [`ADOPTION.md`](ADOPTION.md) — it covers prerequisites,
-the intake questionnaire, the deploy drill, and teardown in one place.
+**New here?** Start with [`ADOPTION.md`](ADOPTION.md) — it walks through
+everything you need in one place: what you'll need before you start, the intake
+questions, the deploy drill, and how to take the site down later if you ever
+need to.
 
-**What you get:** a single-page campaign site with four sections — a hero (name,
-tagline, goal, deadline, and an optional progress bar), your story, a **donate**
-button/widget hosted by your payment processor, and a **contact / volunteer**
-section. It's built as static HTML with system fonts, no trackers, and no
-client-side JavaScript, so it loads fast and scores well on Lighthouse.
+**What you get:** one page for your campaign, with four sections — a hero (your
+campaign name, tagline, goal, deadline, and an optional progress bar), your
+story, a **donate** button or widget hosted by your payment processor, and a
+**contact / volunteer** section. It's built as plain static HTML with system
+fonts, no trackers, and no JavaScript running in anyone's browser, so it loads
+fast and scores well on Lighthouse — Google's page-speed and accessibility
+checker.
 
 **What you own — everything:**
 
@@ -49,15 +53,15 @@ client-side JavaScript, so it loads fast and scores well on Lighthouse.
 | Your payment processor account + the money | **You** |
 | Your AWS account (only if you choose the S3 option) | **You** |
 
-The site is delivered **into your account** and runs there. It does not depend
-on us to keep running, and we don't host it, hold your funds, or see your donor
-data.
+The site lives **in your account** and runs from there. It doesn't depend on us
+to keep working, and we don't host it, hold your funds, or see your donor data.
 
 **A note on payments and safety.** This kit **never touches card data.** The
 donate section either links to your processor's hosted donate page or embeds
-their widget — the payment happens on the processor's own secure, PCI-compliant
-pages. That's a deliberate design choice: your money and your compliance
-obligations stay with the processor, not with this website.
+their widget, so the payment itself happens on the processor's own secure,
+PCI-compliant pages — PCI being the card industry's security standard.
+That's deliberate: your money and your compliance obligations stay with the
+processor, not with this website.
 
 ### Edit one file
 
@@ -74,10 +78,11 @@ npm run build   # produce the static site in ./dist
 
 ### Choosing a processor
 
-Pick any processor that gives you either an **embed snippet** or a **donate
-link**. Set one of `donate.embedHtml` or `donate.buttonUrl` in the config. Some
-common, no-backend options (as examples — choose what fits your campaign; we
-don't endorse a specific one):
+Pick any processor that can give you either an **embed snippet** (a block of
+HTML you paste in) or a **donate link**. Set the matching field —
+`donate.embedHtml` or `donate.buttonUrl` — in the config. A few common,
+no-backend options, as examples only — choose whatever fits your campaign, we
+don't endorse any one of them:
 
 | Processor | How you wire it | Notes |
 |---|---|---|
@@ -86,31 +91,36 @@ don't endorse a specific one):
 | **PayPal** | Use a PayPal donate-button link or hosted button as `donate.buttonUrl`. | Widely recognized; simple link-button. |
 | **Donorbox / Stripe Payment Link** | Paste the embed into `donate.embedHtml`, or link the hosted page. | Both provide hosted, embeddable donation pages. |
 
-In every case the payment is completed on the processor's pages. Confirm current
-fees, eligibility, and payout terms directly with the processor.
+Whichever you pick, the payment itself happens on the processor's pages, not
+here. Confirm current fees, eligibility, and payout terms directly with them.
 
 ### Contact & volunteers
 
-No backend ships with this kit. In the config, set `contact.email` (renders a
-`mailto:` button) and/or paste a hosted form embed (Google Forms, Tally,
-Jotform) into `contact.formEmbedHtml`.
+This kit doesn't ship a backend — there's no server of its own to receive a
+form submission. In the config, set `contact.email` (renders a `mailto:`
+button, the kind that opens the visitor's email app) and/or paste a hosted
+form embed (Google Forms, Tally, Jotform) into `contact.formEmbedHtml`.
 
 ### Deploying (your account, your choice)
 
-- **GitHub Pages — free, the default.** In your repo, Settings → Pages → Source
-  = *GitHub Actions*, then push to `main`. [`deploy-pages.yml`](.github/workflows/deploy-pages.yml)
-  builds and publishes. For a project site (`you.github.io/repo/`), set
+- **GitHub Pages — free, the default.** GitHub's own free static-site hosting.
+  In your repo, go to Settings → Pages → Source = *GitHub Actions*, then push
+  to `main`. [`deploy-pages.yml`](.github/workflows/deploy-pages.yml) builds
+  and publishes it for you. For a project site (`you.github.io/repo/`), set
   `base: "/repo/"` in the config.
-- **S3 + CloudFront — the paid variant.** For a custom domain with a CDN. See
-  [`deploy-s3.yml`](.github/workflows/deploy-s3.yml): it authenticates to **your**
-  AWS account via short-lived GitHub OIDC (there are **no long-lived AWS keys**
-  anywhere in this kit), syncs to S3, and optionally invalidates CloudFront. It's
-  disabled until you fill in four clearly-marked placeholders. This option costs
-  money on AWS; Pages does not.
+- **S3 + CloudFront — the paid variant.** Amazon's storage and
+  content-delivery services, for a custom domain with a CDN — a network of
+  servers that serve your site from somewhere close to each visitor. See
+  [`deploy-s3.yml`](.github/workflows/deploy-s3.yml): it proves its identity to
+  **your** AWS account with short-lived GitHub OIDC — a sign-in method that
+  needs no stored password or key — so there are **no long-lived AWS keys**
+  anywhere in this kit. It syncs to S3 and optionally clears the CloudFront
+  cache. It ships switched off until you fill in four clearly-marked
+  placeholders. This option costs money on AWS; Pages doesn't.
 
 ## For the operator — running the dry-run
 
-Two documents drive an engagement:
+Two documents drive an engagement with a client:
 
 1. [`INTAKE.md`](INTAKE.md) — the one-page questionnaire. Every answer maps to a
    `campaign.config.ts` field or a setup step. Fill it in with the client first.
@@ -136,10 +146,11 @@ behind the donate-embed and client-ownership design.
 
 ---
 
-> 🌱 **Lentago Labs** is a team learning lab — real systems, non-critical stakes,
-> modern operations patterns demonstrated in the open. Start at the
-> [org profile](https://github.com/lentago), and read this repo on
-> [DeepWiki](https://deepwiki.com/lentago/monarda).
+> 🌱 **Lentago Labs** is a pro-bono operations practice for organizations that
+> run on volunteers, donations, and one overworked tech person. Everything here
+> is free to take, and we practice what we publish: our own estate runs this
+> way, in the open. Start at the [org profile](https://github.com/lentago), and
+> read this repo on [DeepWiki](https://deepwiki.com/lentago/monarda).
 
 <!--
   This is a GitHub template repo. "Use this template" copies these FILES into a
