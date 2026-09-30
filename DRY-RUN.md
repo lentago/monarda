@@ -1,11 +1,16 @@
 # Dry-run runbook — filled intake to live site
 
-A timed drill. The goal: starting from a completed [`INTAKE.md`](INTAKE.md), get
-a real campaign site live **on the client's own account** with every check green.
-The receipt is the recorded time — fill in the table at the bottom.
+**What you're about to do:** starting from a completed [`INTAKE.md`](INTAKE.md),
+take a real campaign site live — **on the client's own account** — with every
+check along the way turning green.
 
-Run this end to end at least once before a real engagement. It surfaces the slow
-steps (DNS, the AWS OIDC role) while nothing is at stake.
+**Why bother:** running this once before a real engagement surfaces the slow
+steps (DNS, the AWS OIDC role — the sign-in method the S3 deploy uses instead
+of a stored password) while nothing is at stake. Find the stumble here, not in
+front of the client.
+
+**Time:** however long the drill takes you, start to finish — that's the
+receipt. Fill in the table at the bottom when you're done.
 
 ## Before you start the clock
 
@@ -55,8 +60,18 @@ Stop the clock.
 
 ## Notes
 
-- **DNS and the AWS OIDC role are the usual bottlenecks.** Propagation and IAM
-  trust policies take longest and are worth pre-staging on a real engagement.
-- A `base` mismatch is the most common "why is my CSS missing" symptom — a
-  project Pages site needs `base: "/<repo>/"`.
-- Re-running the drill after any template change keeps the recorded time honest.
+> **Heads up.** DNS and the AWS OIDC role are the usual bottlenecks. DNS
+> propagation and IAM trust policies both take longer than you'd expect —
+> worth pre-staging before a real engagement.
+
+> **Heads up.** A `base` mismatch is the most common cause of "why is my CSS
+> missing." A project Pages site needs `base: "/<repo>/"`.
+
+Re-running the drill after any template change keeps the recorded time honest.
+
+## How you know it worked
+
+Every row in the drill above is checked, the live URL loads over HTTPS with
+your content in place, the donate button reaches the processor's page, and
+contact works. That's what you're signing off on when you fill in the
+[Receipt](#receipt).

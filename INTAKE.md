@@ -17,7 +17,7 @@ their hosted widget.
 | Fundraising goal (formatted, e.g. `$25,000`) | | `goal` |
 | Amount raised so far, if you want a progress bar (optional) | | `raised` |
 | Campaign deadline (e.g. `November 4, 2026`) | | `deadline` |
-| Hero sub-headline — one or two sentences on the ask | | `hero.subhead` |
+| Sub-headline below your campaign name — one or two sentences on what you're asking for | | `hero.subhead` |
 
 ## 2. The story
 
@@ -27,18 +27,20 @@ their hosted widget.
 
 ## 3. Payments — your processor
 
-You keep the money and the PCI responsibility with a payment processor; the site
-only points at their widget. Pick one and get either an **embed snippet** or a
-**donate link** from your processor account.
+You keep the money, and PCI compliance — the card industry's security rules —
+stays with your payment processor; the site only points at their widget. Pick
+one and get either an **embed snippet** or a **donate link** from your
+processor account.
 
 | Question | Your answer | Maps to |
 |---|---|---|
 | Processor (Givebutter / Zeffy / PayPal / Donorbox / other) | | `donate.processorName` |
-| Do you have an embed snippet, a donate-page URL, or neither yet? | | `donate.embedHtml` / `donate.buttonUrl` |
+| Do you already have an embed snippet (a block of HTML your processor gives you to paste in), a donate-page URL, or neither yet? | | `donate.embedHtml` / `donate.buttonUrl` |
 | Paste the embed snippet **or** the donate URL here | | `donate.embedHtml` / `donate.buttonUrl` |
 
 See the "Choosing a processor" section of [`README.md`](README.md) for what each
-option looks like. All are free to start; none require a backend.
+option looks like. All are free to start; none require a backend — a server of
+your own.
 
 ## 4. Contact & volunteers (no backend)
 
@@ -60,7 +62,7 @@ option looks like. All are free to start; none require a backend.
 | Question | Your answer | Used for |
 |---|---|---|
 | Who owns the GitHub org/account this repo goes into? | | Hosting; branch = source of truth |
-| Deploy target: **GitHub Pages** (free, default) or **S3 + CloudFront** (paid)? | | Which deploy workflow |
+| Deploy target: **GitHub Pages** (free, default) or **S3 + CloudFront** (paid — Amazon's storage and content-delivery service)? | | Which deploy workflow |
 | Custom domain? If yes, which one? | | `siteUrl`, `base`, DNS |
 | If S3: which AWS account owns the bucket + who administers it? | | OIDC role, bucket |
 

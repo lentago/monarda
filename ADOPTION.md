@@ -1,10 +1,17 @@
 # Adopting the monarda campaign-site kit
 
-A ready-to-run fundraising campaign website: a fast, static, accessible single
-page you configure by editing one file, built with Astro and deployed by GitHub
-Actions to your own GitHub Pages or AWS account. When you are done, you own
-everything — the repository, the domain, the processor account, and optionally
-the AWS account. Nothing is hosted by the party who set this up for you.
+**What you're about to do:** set up your own fundraising campaign website — a
+fast, static, accessible page you configure by editing one file — and deploy
+it, with GitHub Actions, to your own GitHub Pages or AWS account.
+
+**Why bother:** when you're done, you own everything — the repository, the
+domain, the processor account, and (if you chose that path) the AWS account.
+Nothing here is hosted by the party who set it up for you, so nobody else can
+take it down or hold it for ransom.
+
+**Time:** about an hour for the Pages path, often less — but nobody has
+recorded a receipt yet, so treat that as a guess until the table at the bottom
+says otherwise. See [Prerequisites](#prerequisites) for what tends to be slow.
 
 **Status of this runbook:** never run — see [Receipt](#receipt)
 
@@ -59,8 +66,9 @@ small for a campaign site, but check AWS pricing for S3 and CloudFront before
 choosing that path.
 
 **Time:** Allow a few hours end to end on the first run. DNS propagation and
-setting up the AWS OIDC role (S3 path only) are the usual slow steps; see
-[DRY-RUN.md](DRY-RUN.md) for details.
+setting up the AWS OIDC role (S3 path only — OIDC is the sign-in method that
+lets GitHub Actions prove its identity to AWS without a stored password or
+key) are the usual slow steps; see [DRY-RUN.md](DRY-RUN.md) for details.
 
 ## Intake
 
@@ -79,20 +87,21 @@ explicit mention:
 | `#1b4b2e` (Lentago brand green) | `campaign.config.ts` → `theme.accent` | Your brand or campaign color (hex) | mechanical |
 | `us-east-1` | `.github/workflows/deploy-s3.yml` → `AWS_REGION` (S3 path only) | Your S3 bucket's AWS region | mechanical |
 
-The S3 deploy workflow ships deliberately disabled — its trigger is
-`workflow_dispatch` only until you fill in all four `env:` values in
-`deploy-s3.yml` (`AWS_REGION`, `AWS_ROLE_ARN`, `S3_BUCKET`,
-`CLOUDFRONT_DISTRIBUTION_ID`). The `REPLACE_ME` strings in that file make each
-placeholder visually unmistakable.
+> **Heads up.** The S3 deploy workflow ships deliberately disabled. Its trigger
+> is `workflow_dispatch` only, until you fill in all four `env:` values in
+> `deploy-s3.yml` (`AWS_REGION`, `AWS_ROLE_ARN`, `S3_BUCKET`,
+> `CLOUDFRONT_DISTRIBUTION_ID`). The `REPLACE_ME` strings in that file make each
+> placeholder unmistakable — if nothing deployed, check those first.
 
 ## The drill
 
 The full 15-step drill — from a completed `INTAKE.md` to a live site on your
-account — lives in [`DRY-RUN.md`](DRY-RUN.md). Follow it in order; every step
-has a falsifiable "check it's green" before you move on.
+account — lives in [`DRY-RUN.md`](DRY-RUN.md). Follow it in order. Every step
+has a check: something concrete you can confirm before moving to the next one.
 
-**If a check does not go green,** stop at that step. The next step assumes the
-previous one succeeded. See [Troubleshooting](#troubleshooting) below.
+> **Heads up.** If a check doesn't go green, stop right there. Every later step
+> assumes the one before it worked. See [Troubleshooting](#troubleshooting)
+> below for the common causes.
 
 ## Verify it works
 
