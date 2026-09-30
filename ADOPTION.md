@@ -9,8 +9,9 @@ domain, the processor account, and (if you chose that path) the AWS account.
 Nothing here is hosted by the party who set it up for you, so nobody else can
 take it down or hold it for ransom.
 
-**Time:** allow a few hours for a first run through the whole drill. See
-[Prerequisites](#prerequisites) for what tends to be slow.
+**Time:** about an hour for the Pages path, often less — but nobody has
+recorded a receipt yet, so treat that as a guess until the table at the bottom
+says otherwise. See [Prerequisites](#prerequisites) for what tends to be slow.
 
 **Status of this runbook:** never run — see [Receipt](#receipt)
 
