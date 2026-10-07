@@ -2,7 +2,7 @@
      Regenerate there; do not hand-edit the banner or badge URLs. -->
 <a href="https://lentago.dev"><img src="./assets/banner.svg" alt="monarda — campaign-site kit: fast static Astro site + timed deploy runbook, into your own account" width="100%"></a>
 
-[![main](https://img.shields.io/github/check-runs/lentago/monarda/main?style=flat-square&labelColor=0e2b1a&color=1b4b2e&label=main)](https://github.com/lentago/monarda/actions) [![License](https://img.shields.io/github/license/lentago/monarda?style=flat-square&labelColor=0e2b1a&color=1b4b2e)](https://github.com/lentago/monarda/blob/main/LICENSE) [![Ask DeepWiki](https://img.shields.io/badge/Ask-DeepWiki-1b4b2e?style=flat-square&labelColor=0e2b1a&logo=readthedocs&logoColor=E0A81C)](https://deepwiki.com/lentago/monarda)
+[![main](https://img.shields.io/github/check-runs/lentago/monarda/main?style=flat-square&labelColor=0e2b1a&color=1b4b2e&label=main)](https://github.com/lentago/monarda/actions) [![License](https://img.shields.io/github/license/lentago/monarda?style=flat-square&labelColor=0e2b1a&color=1b4b2e)](https://github.com/lentago/monarda/blob/main/LICENSE)
 
 ![Template](https://img.shields.io/badge/Template-1b4b2e?style=flat-square&labelColor=0e2b1a) ![Astro](https://img.shields.io/badge/Astro-1b4b2e?style=flat-square&labelColor=0e2b1a) ![MIT](https://img.shields.io/badge/MIT-1b4b2e?style=flat-square&labelColor=0e2b1a)
 
@@ -149,8 +149,7 @@ behind the donate-embed and client-ownership design.
 > 🌱 **Lentago Labs** is a pro-bono operations practice for organizations that
 > run on volunteers, donations, and one overworked tech person. Everything here
 > is free to take, and we practice what we publish: our own estate runs this
-> way, in the open. Start at the [org profile](https://github.com/lentago), and
-> read this repo on [DeepWiki](https://deepwiki.com/lentago/monarda).
+> way, in the open. Start at the [org profile](https://github.com/lentago).
 
 <!--
   This is a GitHub template repo. "Use this template" copies these FILES into a
