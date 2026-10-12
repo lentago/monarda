@@ -36,7 +36,7 @@ everything you need in one place: what you'll need before you start, the intake
 questions, the deploy drill, and how to take the site down later if you ever
 need to.
 
-**What you get:** one page for your campaign, with four sections — a hero (your
+**What you get:** one page for your campaign (rung 1; a plain organization site is rung 2, coming, per [ADR-0004](docs/adr/0004-second-rung-the-plain-organization-site.md)), with four sections — a hero (your
 campaign name, tagline, goal, deadline, and an optional progress bar), your
 story, a **donate** button or widget hosted by your payment processor, and a
 **contact / volunteer** section. It's built as plain static HTML with system
