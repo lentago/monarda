@@ -70,6 +70,10 @@ someone has run it.
 [`INTAKE.md`](INTAKE.md#7-rung-2--the-organization-site) and put the answers in
 the files in `content/`.
 
+**Already have a site?** The [rescue import](docs/rescue-import.md) moves a
+WordPress or Squarespace export onto these pages, and its runbook covers Wix,
+Weebly, Google Sites, and a site you've lost access to.
+
 > **Heads up.** Switching moves the campaign off the front page. Links people
 > already shared to your site's address now land on the organization's home
 > page, and the campaign lives at `/campaign/`.

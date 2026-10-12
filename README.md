@@ -113,6 +113,11 @@ go under [`receipts/`](receipts/README.md). The setup steps are the same as
 rung 1; the extra time is writing the pages, and that depends on how much you
 already have written down.
 
+**Coming from another site?** If your organization already has a WordPress or
+Squarespace site, the [rescue import](docs/rescue-import.md) turns its export
+into these pages and prints what it couldn't carry over. The same runbook covers
+Wix, Weebly, Google Sites, and a site you've lost access to.
+
 ### Choosing a processor
 
 Pick any processor that can give you either an **embed snippet** (a block of
@@ -180,6 +185,7 @@ behind the donate-embed and client-ownership design.
 - [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) — free GitHub Pages deploy
 - [`.github/workflows/deploy-s3.yml`](.github/workflows/deploy-s3.yml) — opt-in S3 + CloudFront deploy (OIDC, no static keys)
 - [`.github/workflows/build-check.yml`](.github/workflows/build-check.yml) — PR gate: type check, build, WCAG 2 AA (pa11y) on every page, for both rungs
+- [`scripts/rescue-import.mjs`](scripts/rescue-import.mjs) — `npm run rescue-import`: WordPress/Squarespace export to rung-2 pages ([runbook](docs/rescue-import.md))
 - [`ci/a11y.mjs`](ci/a11y.mjs) — `npm run a11y`: checks every page the last build produced, locally or live
 - [`INTAKE.md`](INTAKE.md) · [`DRY-RUN.md`](DRY-RUN.md) — intake questionnaire and timed runbook
 - [`docs/adr/`](docs/adr/) — architecture decision records

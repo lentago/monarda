@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Sample WordPress export (WXR) for a fictional organization. Not a real site. -->
+<rss version="2.0"
+  xmlns:excerpt="http://wordpress.org/export/1.2/excerpt/"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:wp="http://wordpress.org/export/1.2/">
+<channel>
+  <title>Harbor Street Garden Club</title>
+  <link>https://harborstreetgardens.example</link>
+  <description>Growing food and neighbors on Harbor Street</description>
+  <wp:wxr_version>1.2</wp:wxr_version>
+  <wp:base_site_url>https://harborstreetgardens.example</wp:base_site_url>
+  <wp:base_blog_url>https://harborstreetgardens.example</wp:base_blog_url>
+
+  <item>
+    <title>Home</title>
+    <link>https://harborstreetgardens.example/</link>
+    <description></description>
+    <content:encoded><![CDATA[<!-- wp:heading {"level":1} -->
+<h1>Welcome to the Harbor Street Garden Club</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>We are 60 neighbors who share 40 garden plots behind the library. Every <strong>Saturday morning</strong> from April to October, the gate is open and the coffee is on.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image -->
+<figure class="wp-block-image"><img src="https://harborstreetgardens.example/wp-content/uploads/2024/05/garden-plot-300x200.png" alt="Raised beds in late May, with tomato cages going up" class="wp-image-41"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>New here? Start with <a href="https://harborstreetgardens.example/about-us/">who we are</a> or see <a href="https://harborstreetgardens.example/events/">what is coming up</a>.</p>
+<!-- /wp:paragraph -->]]></content:encoded>
+    <excerpt:encoded><![CDATA[A neighborhood garden club on Harbor Street with 40 shared plots.]]></excerpt:encoded>
+    <wp:post_id>10</wp:post_id>
+    <wp:post_name>home</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>page</wp:post_type>
+  </item>
+
+  <item>
+    <title>About Us</title>
+    <link>https://harborstreetgardens.example/about-us/</link>
+    <content:encoded><![CDATA[<h2>How we started</h2>
+<p>In 2011 a few of us asked the city for the empty lot behind the library. It took two years and a lot of wheelbarrows.</p>
+<h3>Who runs it</h3>
+<ul><li>A volunteer board of five</li><li>One plot captain for each row</li></ul>]]></content:encoded>
+    <excerpt:encoded><![CDATA[]]></excerpt:encoded>
+    <wp:post_id>11</wp:post_id>
+    <wp:post_name>about-us</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:post_type>page</wp:post_type>
+  </item>
+
+  <item>
+    <title>What We Do</title>
+    <link>https://harborstreetgardens.example/what-we-do/</link>
+    <content:encoded><![CDATA[Plot rental runs $30 a season, and a few plots are free for households that ask.
+
+Our <em>Seed Library</em> lends out seeds in March. Bring back seeds from your best plant in the fall.
+
+[gallery ids="41,42" columns="2"]]]></content:encoded>
+    <wp:post_id>12</wp:post_id>
+    <wp:post_name>what-we-do</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:post_type>page</wp:post_type>
+  </item>
+
+  <item>
+    <title>Events</title>
+    <link>https://harborstreetgardens.example/events/</link>
+    <content:encoded><![CDATA[<h2>Spring plant sale</h2>
+<p>Saturday, May 17, 9 a.m. to noon, at the garden gate.</p>
+<p><a href="https://harborstreetgardens.example/wp-content/uploads/2024/05/spring-sale.png"><img src="https://harborstreetgardens.example/wp-content/uploads/2024/05/spring-sale.png" alt=""/></a></p>
+<p>[tribe_events view="list"]</p>]]></content:encoded>
+    <wp:post_id>13</wp:post_id>
+    <wp:post_name>events</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:post_type>page</wp:post_type>
+  </item>
+
+  <item>
+    <title>Support Us</title>
+    <link>https://harborstreetgardens.example/donate/</link>
+    <content:encoded><![CDATA[<p>Gifts pay for water, lumber for new beds, and the free plots.</p>
+[give_form id="88"]
+<iframe src="https://donorbox.org/embed/harbor-street-gardens" height="900" width="100%"></iframe>]]></content:encoded>
+    <wp:post_id>14</wp:post_id>
+    <wp:post_name>donate</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:post_type>page</wp:post_type>
+  </item>
+
+  <item>
+    <title>Contact Us</title>
+    <link>https://harborstreetgardens.example/contact-us/</link>
+    <content:encoded><![CDATA[<p>Write to <a href="mailto:hello@harborstreetgardens.example">hello@harborstreetgardens.example</a>, or use the form.</p>
+[contact-form-7 id="5" title="Contact form 1"]
+<form action="/subscribe" method="post"><input name="email"><button>Join the list</button></form>]]></content:encoded>
+    <wp:post_id>15</wp:post_id>
+    <wp:post_name>contact-us</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:post_type>page</wp:post_type>
+  </item>
+
+  <item>
+    <title>Volunteer Days</title>
+    <link>https://harborstreetgardens.example/volunteer-days/</link>
+    <content:encoded><![CDATA[[et_pb_section][et_pb_row][et_pb_column type="4_4"][et_pb_text]<p>Second Saturday of the month: weeding, mulching, and lunch.</p>[/et_pb_text][et_pb_button button_text="Sign up" button_url="/contact-us/"][/et_pb_button][/et_pb_column][/et_pb_row][/et_pb_section]]]></content:encoded>
+    <wp:post_id>16</wp:post_id>
+    <wp:post_name>volunteer-days</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:post_type>page</wp:post_type>
+  </item>
+
+  <item>
+    <title>Board Retreat Notes (draft)</title>
+    <content:encoded><![CDATA[<p>Not ready.</p>]]></content:encoded>
+    <wp:post_id>17</wp:post_id>
+    <wp:post_name>board-retreat</wp:post_name>
+    <wp:status>draft</wp:status>
+    <wp:post_type>page</wp:post_type>
+  </item>
+
+  <item>
+    <title>Tomatoes are in</title>
+    <link>https://harborstreetgardens.example/2024/06/tomatoes-are-in/</link>
+    <content:encoded><![CDATA[<p>The first ripe one was on plot 12.</p>]]></content:encoded>
+    <wp:post_id>20</wp:post_id>
+    <wp:post_name>tomatoes-are-in</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:post_type>post</wp:post_type>
+  </item>
+
+  <item>
+    <title>Home</title>
+    <wp:post_id>30</wp:post_id>
+    <wp:post_name>home-menu</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:menu_order>1</wp:menu_order>
+    <wp:post_type>nav_menu_item</wp:post_type>
+    <wp:postmeta><wp:meta_key>_menu_item_type</wp:meta_key><wp:meta_value><![CDATA[post_type]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_menu_item_object_id</wp:meta_key><wp:meta_value><![CDATA[10]]></wp:meta_value></wp:postmeta>
+  </item>
+  <item>
+    <title>Who we are</title>
+    <wp:post_id>31</wp:post_id>
+    <wp:post_name>31</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:menu_order>2</wp:menu_order>
+    <wp:post_type>nav_menu_item</wp:post_type>
+    <wp:postmeta><wp:meta_key>_menu_item_type</wp:meta_key><wp:meta_value><![CDATA[post_type]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_menu_item_object_id</wp:meta_key><wp:meta_value><![CDATA[11]]></wp:meta_value></wp:postmeta>
+  </item>
+  <item>
+    <title>Give</title>
+    <wp:post_id>32</wp:post_id>
+    <wp:post_name>32</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:menu_order>5</wp:menu_order>
+    <wp:post_type>nav_menu_item</wp:post_type>
+    <wp:postmeta><wp:meta_key>_menu_item_type</wp:meta_key><wp:meta_value><![CDATA[post_type]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_menu_item_object_id</wp:meta_key><wp:meta_value><![CDATA[14]]></wp:meta_value></wp:postmeta>
+  </item>
+  <item>
+    <title>Seed swap (Facebook)</title>
+    <wp:post_id>33</wp:post_id>
+    <wp:post_name>33</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:menu_order>7</wp:menu_order>
+    <wp:post_type>nav_menu_item</wp:post_type>
+    <wp:postmeta><wp:meta_key>_menu_item_type</wp:meta_key><wp:meta_value><![CDATA[custom]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_menu_item_url</wp:meta_key><wp:meta_value><![CDATA[https://facebook.example/seedswap]]></wp:meta_value></wp:postmeta>
+  </item>
+  <item>
+    <title>What we do</title>
+    <wp:post_id>34</wp:post_id>
+    <wp:post_name>34</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:menu_order>3</wp:menu_order>
+    <wp:post_type>nav_menu_item</wp:post_type>
+    <wp:postmeta><wp:meta_key>_menu_item_type</wp:meta_key><wp:meta_value><![CDATA[post_type]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_menu_item_object_id</wp:meta_key><wp:meta_value><![CDATA[12]]></wp:meta_value></wp:postmeta>
+  </item>
+  <item>
+    <title>Events</title>
+    <wp:post_id>35</wp:post_id>
+    <wp:post_name>35</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:menu_order>4</wp:menu_order>
+    <wp:post_type>nav_menu_item</wp:post_type>
+    <wp:postmeta><wp:meta_key>_menu_item_type</wp:meta_key><wp:meta_value><![CDATA[post_type]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_menu_item_object_id</wp:meta_key><wp:meta_value><![CDATA[13]]></wp:meta_value></wp:postmeta>
+  </item>
+  <item>
+    <title>Contact Us</title>
+    <wp:post_id>36</wp:post_id>
+    <wp:post_name>36</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:menu_order>6</wp:menu_order>
+    <wp:post_type>nav_menu_item</wp:post_type>
+    <wp:postmeta><wp:meta_key>_menu_item_type</wp:meta_key><wp:meta_value><![CDATA[post_type]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_menu_item_object_id</wp:meta_key><wp:meta_value><![CDATA[15]]></wp:meta_value></wp:postmeta>
+  </item>
+</channel>
+</rss>

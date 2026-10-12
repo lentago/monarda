@@ -43,6 +43,12 @@ words, the donate page shows the donate button or widget, and the contact page
 shows the email button or form, both set in `campaign.config.ts`. Payments
 happen on your processor's own page; this site never sees card details.
 
+## Bringing pages from an old site
+
+If your words are on WordPress or Squarespace, the
+[rescue import](../docs/rescue-import.md) writes these files for you from the
+site's export. It overwrites only the "Replace this" placeholders.
+
 ## Adding or removing a page
 
 - **To remove a page,** delete its file. It leaves the menu too. Keep `home.md`.
