@@ -48,7 +48,9 @@ the box.
   processor — not with this site.
 - **Not a CMS.** There is no admin panel, no database, and no login. You edit
   `campaign.config.ts` in the repository and push.
-- **Not multi-page.** This is a single campaign landing page.
+- **One page, on this rung.** This is a single campaign landing page. A plain
+  organization site (home, about, programs, events, donate, contact) is rung 2,
+  coming, per [ADR-0004](docs/adr/0004-second-rung-the-plain-organization-site.md).
 
 ## Prerequisites
 
