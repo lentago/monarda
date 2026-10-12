@@ -13,6 +13,19 @@
 import type { CampaignConfig } from "./src/config";
 
 const config: CampaignConfig = {
+  // --- Which site ------------------------------------------------------------
+  //  1 = the one-page campaign site below (the default).
+  //  2 = the plain organization site: home, about, programs, events, donate,
+  //      and contact pages, each a Markdown file in ./content that you edit.
+  //      Donate, contact, colors, siteUrl, and base below apply to both.
+  rung: 1,
+  organization: {
+    // Rung 2 only; ignored on rung 1.
+    name: "Your Organization",
+    tagline: "One line that says who you are and who you serve.",
+    campaignPage: true, // keep the campaign below as a page at /campaign/
+  },
+
   // --- Identity --------------------------------------------------------------
   name: "Your Campaign Name",
   tagline: "A short line that says what you're raising money to do.",

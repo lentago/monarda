@@ -1,0 +1,27 @@
+---
+// Rung 2: renders one Markdown page from ./content. The donate and contact
+// pages also get the processor-hosted donate section or the contact section
+// configured in campaign.config.ts.
+import { render } from "astro:content";
+import OrgPage from "../layouts/OrgPage.astro";
+import Donate from "./Donate.astro";
+import Contact from "./Contact.astro";
+import campaign from "../../campaign.config";
+import { organization } from "../config";
+import type { Page } from "../lib/pages";
+
+interface Props {
+  page: Page;
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+const org = organization(campaign);
+const title = page.id === "home" ? org.name : `${page.data.title} — ${org.name}`;
+---
+
+<OrgPage heading={page.data.title} title={title} description={page.data.description}>
+  <Content slot="body" />
+  {page.id === "donate" && <Donate />}
+  {page.id === "contact" && <Contact />}
+</OrgPage>

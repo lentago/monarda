@@ -10,7 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "a11y": "pa11y-ci --config .pa11yci.json"
+    "a11y": "node ci/a11y.mjs"
   },
   "dependencies": {
     "astro": "^5.13.0"

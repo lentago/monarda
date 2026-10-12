@@ -1,0 +1,48 @@
+---
+// Rung 2's other pages: one per Markdown file in ./content, plus the campaign
+// page at /campaign/ when `organization.campaignPage` is on. On rung 1 this
+// file builds nothing.
+import OrgContent from "../components/OrgContent.astro";
+import OrgPage from "../layouts/OrgPage.astro";
+import Hero from "../components/Hero.astro";
+import Story from "../components/Story.astro";
+import Donate from "../components/Donate.astro";
+import Contact from "../components/Contact.astro";
+import campaign from "../../campaign.config";
+import { organization, siteRung } from "../config";
+import { pages, type Page } from "../lib/pages";
+
+export async function getStaticPaths() {
+  if (siteRung(campaign) !== 2) return [];
+  const all = await pages();
+  const paths: { params: { page: string }; props: { page?: Page } }[] = all
+    .filter((p) => p.id !== "home")
+    .map((p) => ({ params: { page: p.id }, props: { page: p } }));
+  if (organization(campaign).campaignPage) {
+    if (all.some((p) => p.id === "campaign")) {
+      throw new Error(
+        "content/campaign.md clashes with the campaign page at /campaign/. " +
+          "Rename the file, or set organization.campaignPage to false.",
+      );
+    }
+    paths.push({ params: { page: "campaign" }, props: {} });
+  }
+  return paths;
+}
+
+const { page } = Astro.props;
+const org = organization(campaign);
+---
+
+{
+  page ? (
+    <OrgContent page={page} />
+  ) : (
+    <OrgPage title={`${campaign.name} — ${org.name}`} description={campaign.tagline}>
+      <Hero />
+      <Story />
+      <Donate />
+      <Contact />
+    </OrgPage>
+  )
+}

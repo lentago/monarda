@@ -1,7 +1,7 @@
 # Campaign intake — one page
 
-Fill this in once. Every answer maps to a field in `campaign.config.ts` (or to a
-one-time setup step). When this page is complete, a site can go live on your own
+Fill this in once. Every answer maps to a field in `campaign.config.ts`, to a
+one-time setup step, or (rung 2 only) to a page in `content/`. When this page is complete, a site can go live on your own
 account in a single sitting — see [`DRY-RUN.md`](DRY-RUN.md).
 
 Nothing here asks for card numbers, bank details, or donor data. Payments are
@@ -70,3 +70,25 @@ your own.
 > the AWS account are all **yours**. This kit is delivered into your account and
 > runs there. It is not hosted by, and does not depend on, the party who set it
 > up for you.
+
+## 7. Rung 2 — the organization site
+
+**Skip this if** one campaign page is enough. Rung 2 turns the site into six
+pages about your organization: home, about, programs, events, donate, and
+contact. Each page is a short Markdown file in `content/`, plain text with a
+few marks for headings and lists, so these answers can be as rough as notes.
+If you have a website today, its pages are the quickest place to copy them
+from.
+
+| Question | Your answer | Maps to |
+|---|---|---|
+| Organization name, as it should appear at the top of every page | | `organization.name` |
+| One line on who you are and who you serve | | `organization.tagline` |
+| Keep the campaign as one of the pages? (yes / no) | | `organization.campaignPage` |
+| Home: two or three sentences a first-time visitor should read | | `content/home.md` |
+| About: how you started, who's involved, where to find you | | `content/about.md` |
+| Programs: each program, who it serves, when it runs, how to take part | | `content/programs.md` |
+| Events: upcoming dates, and anything that happens every week | | `content/events.md` |
+| Donate: what a gift makes possible, in one or two concrete sentences | | `content/donate.md` |
+| Contact: phone or mailing address if you want them shown, and how to volunteer | | `content/contact.md` |
+| Any of about, programs, or events you don't need? | | Delete that file in `content/` |

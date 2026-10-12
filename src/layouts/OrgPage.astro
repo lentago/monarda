@@ -1,0 +1,50 @@
+---
+// Rung 2: one page of the organization site — shared header, the page's
+// Markdown, and the shared footer. Pass the donate or contact section (or the
+// whole campaign) as children to render it below the Markdown.
+import Base from "./Base.astro";
+import OrgHeader from "../components/OrgHeader.astro";
+import OrgFooter from "../components/OrgFooter.astro";
+import campaign from "../../campaign.config";
+import { organization } from "../config";
+
+interface Props {
+  /** The page heading. Omit when the children bring their own <h1>. */
+  heading?: string;
+  /** Browser-tab title. */
+  title: string;
+  description?: string;
+}
+
+const { heading, title, description } = Astro.props;
+const org = organization(campaign);
+---
+
+<Base title={title} description={description ?? org.tagline}>
+  <OrgHeader />
+  <main id="main">
+    {
+      heading && (
+        <article class="container page">
+          <h1>{heading}</h1>
+          <slot name="body" />
+        </article>
+      )
+    }
+    <slot />
+  </main>
+  <OrgFooter />
+</Base>
+
+<style>
+  .page {
+    padding-block: clamp(2rem, 6vw, 3.5rem) 1rem;
+  }
+  .page :global(h2) {
+    margin-top: 2rem;
+  }
+  .page :global(p),
+  .page :global(li) {
+    max-width: 40rem;
+  }
+</style>

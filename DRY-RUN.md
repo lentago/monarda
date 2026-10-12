@@ -2,7 +2,8 @@
 
 **What you're about to do:** starting from a completed [`INTAKE.md`](INTAKE.md),
 take a real campaign site live — **on the client's own account** — with every
-check along the way turning green.
+check along the way turning green. An optional second drill below switches
+the site to rung 2, the plain organization site, and times it separately.
 
 **Why bother:** running this once before a real engagement surfaces the slow
 steps (DNS, the AWS OIDC role — the sign-in method the S3 deploy uses instead
@@ -58,6 +59,44 @@ Stop the clock.
 | Slowest step (bottleneck) | |
 | Notes / follow-ups | |
 
+## Optional second drill — rung 2, the organization site
+
+**Skip this if** the organization only needs the campaign page. Rung 2 turns
+the site into six pages (home, about, programs, events, donate, contact), each
+a Markdown file in [`content/`](content/README.md). Start a second clock; this
+time is recorded separately so the rung-1 number stays honest.
+
+**Before you start the second clock:**
+
+- [ ] The rung-1 drill above is done: the site is live on the client's
+      account, with donate and contact wired.
+- [ ] Section 7 of [`INTAKE.md`](INTAKE.md) is filled in, with the words for
+      each page.
+
+| # | Step | Check it's green | Elapsed | ✅ |
+|---|---|---|---|---|
+| A | **Switch the rung on.** In `campaign.config.ts`, set `rung: 2` and fill in `organization` (name, tagline, and whether to keep the campaign page). | `npm run dev` shows the organization's home page with a menu of six pages, or seven with the campaign page. | | |
+| B | **Fill the pages.** Put the intake answers into the files in `content/`. Delete any page the organization doesn't want, except `home.md`. | `grep -l "Replace this" content/*.md` lists only `content/README.md`. | | |
+| C | **Build and check locally:** `npm run build`, `npm run check`, then `npm run a11y`. | The build lists every page; the type check reports 0 errors; the accessibility check lists every page with 0 errors. | | |
+| D | **Deploy.** Commit and push to `main`, then watch the deploy workflow in the Actions tab. | Workflow is green. | | |
+| E | **Open every page.** Visit the live URL and follow each link in the menu. On the donate page, click the donate button or widget. | Every page loads over HTTPS with the header, footer, and your content; donate reaches the processor's hosted page. | | |
+| F | **Check accessibility on the live site:** `npm run a11y -- <live URL>`. | Every page is listed with 0 errors. | | |
+
+Stop the second clock.
+
+## Rung-2 receipt
+
+| Field | Value |
+|---|---|
+| Date of drill | |
+| Operator | |
+| Deploy target (Pages / S3) | |
+| Pages built | |
+| **Total elapsed time, rung 2** | |
+| All checks green? (Y/N) | |
+| Slowest step (bottleneck) | |
+| Notes / follow-ups | |
+
 ## Notes
 
 > **Heads up.** DNS and the AWS OIDC role are the usual bottlenecks. DNS
@@ -66,6 +105,19 @@ Stop the clock.
 
 > **Heads up.** A `base` mismatch is the most common cause of "why is my CSS
 > missing." A project Pages site needs `base: "/<repo>/"`.
+
+> **Heads up (rung 2).** Switching moves the campaign off the front page:
+> the site's address now opens the organization's home page, and the campaign
+> lives at `/campaign/`. Tell the client before step D if links to the
+> campaign are already out in the world.
+
+> **Heads up (rung 2).** In the Markdown pages, link to other pages as
+> `/donate/` or `/events/`, with a slash at each end. The kit adds `base` for
+> you, so the same link works on a project Pages site and a custom domain.
+
+> **Heads up (rung 2, step F).** `npm run a11y` takes its page list from your
+> last local `npm run build`. Build the same commit you pushed before checking
+> the live site, or a page you added since won't be checked.
 
 Re-running the drill after any template change keeps the recorded time honest.
 The kit maintainers' runs are recorded under [`receipts/`](receipts/README.md);
@@ -76,4 +128,6 @@ the tables in this file ship blank so they are yours to fill.
 Every row in the drill above is checked, the live URL loads over HTTPS with
 your content in place, the donate button reaches the processor's page, and
 contact works. That's what you're signing off on when you fill in the
-[Receipt](#receipt).
+[Receipt](#receipt). If you ran the second drill, every page in the menu loads
+on the live site and passes the accessibility check; that's what the
+[Rung-2 receipt](#rung-2-receipt) signs off on.

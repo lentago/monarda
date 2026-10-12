@@ -6,15 +6,33 @@ import Story from "../components/Story.astro";
 import Donate from "../components/Donate.astro";
 import Contact from "../components/Contact.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import OrgContent from "../components/OrgContent.astro";
+import { getEntry } from "astro:content";
+import campaign from "../../campaign.config";
+import { siteRung } from "../config";
+
+// Rung 1: the one-page campaign site. Rung 2: the organization's home page,
+// from content/home.md.
+const rung = siteRung(campaign);
+const home = rung === 2 ? await getEntry("pages", "home") : undefined;
+if (rung === 2 && !home) {
+  throw new Error("Rung 2 needs a front page: add content/home.md.");
+}
 ---
 
-<Base>
-  <SiteHeader />
-  <main id="main">
-    <Hero />
-    <Story />
-    <Donate />
-    <Contact />
-  </main>
-  <SiteFooter />
-</Base>
+{
+  home ? (
+    <OrgContent page={home} />
+  ) : (
+    <Base>
+      <SiteHeader />
+      <main id="main">
+        <Hero />
+        <Story />
+        <Donate />
+        <Contact />
+      </main>
+      <SiteFooter />
+    </Base>
+  )
+}

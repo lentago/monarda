@@ -2,8 +2,14 @@
 import "../styles/global.css";
 import campaign from "../../campaign.config";
 
-const title = campaign.name;
-const description = campaign.tagline;
+interface Props {
+  /** Browser-tab title. Defaults to the campaign name (rung 1). */
+  title?: string;
+  /** Meta description. Defaults to the campaign tagline (rung 1). */
+  description?: string;
+}
+
+const { title = campaign.name, description = campaign.tagline } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? campaign.siteUrl).href;
 
 // Inject the campaign's accent colors as CSS custom properties so the single

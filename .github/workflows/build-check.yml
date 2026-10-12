@@ -3,7 +3,12 @@
 # ============================================================================
 # Runs on every pull request that touches the site. Three gates, cheapest
 # first: `astro check` (types), `astro build` (it compiles), and pa11y-ci
-# (WCAG 2 AA on the built HTML, config in .pa11yci.json).
+# (WCAG 2 AA on every built page; `npm run a11y` takes the page list from the
+# build, so a new page is checked without editing anything).
+#
+# It runs twice, once per rung (SITE_RUNG overrides `rung` in
+# campaign.config.ts for that build), so the rung you are on and the one you
+# might switch to both stay green.
 #
 # This is NOT wired as a required status check by default — it is path-filtered
 # so it only runs when site files change, and a path-filtered required check
@@ -22,17 +27,26 @@ on:
     paths:
       - "src/**"
       - "public/**"
+      - "content/**"
       - "campaign.config.ts"
       - "astro.config.ts"
       - "tsconfig.json"
       - "package.json"
       - "package-lock.json"
       - ".pa11yci.json"
+      - "ci/a11y.mjs"
       - ".github/workflows/build-check.yml"
 
 jobs:
   build:
+    name: build (rung ${{ matrix.rung }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        rung: ["1", "2"]
+    env:
+      SITE_RUNG: ${{ matrix.rung }}
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -47,11 +61,5 @@ jobs:
         run: npm run check
       - name: Build
         run: npm run build
-      - name: Accessibility check (WCAG 2 AA)
-        run: |
-          npx astro preview --port 4321 --host 127.0.0.1 &
-          for i in $(seq 1 30); do
-            curl -sf http://127.0.0.1:4321/ >/dev/null && break
-            sleep 1
-          done
-          npm run a11y
+      - name: Accessibility check, every page (WCAG 2 AA)
+        run: npm run a11y

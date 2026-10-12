@@ -1,6 +1,6 @@
 {
-  "//": "Accessibility gate for the built site. `npm run build` first, then this",
-  "//2": "serves ./dist and checks each URL against WCAG2AA. CI runs it too.",
+  "//": "Runner settings for `npm run a11y` (ci/a11y.mjs), which checks every page",
+  "//2": "the last `npm run build` produced. There is no URL list to keep up to date.",
   "defaults": {
     "standard": "WCAG2AA",
     "runners": ["axe", "htmlcs"],
@@ -8,6 +8,5 @@
     "chromeLaunchConfig": {
       "args": ["--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage"]
     }
-  },
-  "urls": ["http://127.0.0.1:4321/"]
+  }
 }
