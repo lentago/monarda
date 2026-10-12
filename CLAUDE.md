@@ -39,6 +39,7 @@ processor-hosted widget and never touches card data.
 | `.github/workflows/deploy-pages.yml` | Free GitHub Pages deploy (the default). |
 | `.github/workflows/deploy-s3.yml` | Opt-in S3 + CloudFront deploy via OIDC — no static AWS keys. |
 | `.github/workflows/build-check.yml` | PR gate, once per rung: `astro check`, build, pa11y WCAG 2 AA on every page. |
+| `editor/sveltia/` | Off-by-default Sveltia CMS config for rung 2; the build ignores it until copied to `public/admin/` (see `docs/editing-without-git.md`). |
 | `INTAKE.md` / `DRY-RUN.md` | Client questionnaire and the timed deploy drill. |
 | `docs/adr/` | Architecture decision records. |
 
