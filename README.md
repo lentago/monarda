@@ -95,7 +95,10 @@ server, no admin screen, and nothing hosted by anyone but you.
 
 **How to switch:** set `rung: 2` in `campaign.config.ts`, fill in the
 `organization` block next to it, and edit the files in `content/`. To preview
-rung 2 before you commit to it, run `SITE_RUNG=2 npm run dev`.
+rung 2 before you commit to it, run `SITE_RUNG=2 npm run dev`. If the people who
+edit your pages shouldn't have to learn git, [`docs/editing-without-git.md`](docs/editing-without-git.md)
+sets up an optional browser editor, in your own accounts, that sends each edit
+to you as a pull request.
 
 **What it costs:** the same as rung 1. GitHub Pages is free, and the S3 path
 costs what AWS charges for a handful of small files. The pull-request check

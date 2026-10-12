@@ -1,0 +1,36 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms@0.235.1/schema/sveltia-cms.json
+#
+# Sveltia CMS settings for rung 2. Off by default: nothing reads this file
+# until you copy this folder to public/admin. Steps and the three values to
+# change (marked CHANGE) are in docs/editing-without-git.md.
+
+backend:
+  name: github
+  repo: your-org/your-repo # CHANGE: the organization's GitHub org and repository
+  branch: main
+  base_url: https://sveltia-cms-auth.your-subdomain.workers.dev # CHANGE: your sign-in Worker's address
+
+# Every edit becomes its own branch and pull request instead of a commit on main.
+publish_mode: editorial_workflow
+
+# Pictures a volunteer uploads go to public/media and are linked as /media/...
+media_folder: /public/media
+public_folder: /media
+
+collections:
+  - name: pages
+    label: Pages
+    label_singular: Page
+    folder: /content
+    extension: md
+    format: frontmatter
+    # content/README.md has no title, so this keeps it out of the list.
+    filter: { field: title, pattern: ".+" }
+    create: true
+    delete: true
+    fields:
+      - { label: Title, name: title, widget: string, hint: "The page's main heading and its browser-tab title." }
+      - { label: Description, name: description, widget: string, required: false, hint: "The summary search engines and link previews show. Leave empty to use the organization's tagline." }
+      - { label: Menu label, name: nav, widget: string, required: false, hint: "The label in the menu at the top. Leave empty to use the title." }
+      - { label: Menu position, name: order, widget: number, value_type: int, min: 1, default: 100, required: false, hint: "Lowest number comes first in the menu." }
+      - { label: Body, name: body, widget: markdown, hint: "Start your own headings at level 2, because the title is already the top heading." }

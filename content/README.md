@@ -33,6 +33,9 @@ is yours.
 > like `/events/`. The kit adds your site's `base` path for you, so the same
 > link works on a GitHub Pages project site and on your own domain.
 
+If the people editing these files shouldn't have to learn git, see
+[editing without git](../docs/editing-without-git.md).
+
 ## The donate and contact pages
 
 `donate.md` and `contact.md` are ordinary pages with one extra: below your
