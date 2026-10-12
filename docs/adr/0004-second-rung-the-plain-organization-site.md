@@ -11,7 +11,7 @@ from the repository alone, and on 2026-10-12 it was timed for the first time:
 three minutes and one second from "Use this template" to a live site
 ([receipt](../../receipts/2026-10-12-agent-run.md)).
 
-Three of the five adoption stories in `lentago/lupinus` lean on monarda, and
+Three of the five adoption stories in [`lentago/lupinus`](https://github.com/lentago/lupinus/blob/main/guide/stories/README.md) lean on monarda, and
 two of them (the pantry and the community theatre) are really asking for the
 organization's whole site, not a campaign: a handful of pages that say who the
 organization is, what it does, when things happen, how to give, and how to
@@ -55,7 +55,7 @@ same day to add the rung.
   with rungs mirrors the ladder the fleet already uses, shares the deploy and
   accessibility machinery, and keeps the first-time path to one repository.
   Revisit if the two page sets diverge.
-- **Build an editing interface into the kit.** Rejected: ADR-0007 asks for kits
+- **Build an editing interface into the kit.** Rejected: [ADR-0007](https://github.com/lentago/.github/blob/main/docs/adr/0007-client-owned-delivery-no-multi-tenant-saas.md) asks for kits
   that are boring-simple to operate with no server to run; a hosted editor is a
   dependency the organization would have to leave.
 
