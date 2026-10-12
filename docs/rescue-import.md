@@ -70,7 +70,8 @@ npm run rescue-import -- old-site.xml
 The script reads the file, writes one Markdown file per published page into
 `content/`, and downloads every image and document those pages use into
 `public/images/` and `public/files/`. That is the only network traffic: it
-fetches from the old site, and nothing is sent anywhere.
+fetches what your pages link to (usually the old site, though a link can point
+anywhere), and it sends no site content anywhere.
 
 What it does to each page:
 

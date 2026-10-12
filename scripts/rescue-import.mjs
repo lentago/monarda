@@ -14,16 +14,18 @@
 // prints what the export could not carry over, with the kit's replacement for
 // each. The runbook is docs/rescue-import.md.
 //
-// The only network traffic is fetching the images and documents from the old
-// site, and only when you run this. Nothing is sent anywhere.
+// The only network traffic is fetching the images and documents your pages
+// link to (usually the old site, but a link can point anywhere), and only when
+// you run this. It sends no site content anywhere.
 // -----------------------------------------------------------------------------
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, extname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import TurndownService from "turndown";
 import { parseStringPromise } from "xml2js";
 
-const root = new URL("..", import.meta.url).pathname;
+const root = fileURLToPath(new URL("..", import.meta.url));
 
 const USAGE = `Usage: npm run rescue-import -- <export.xml> [options]
 
@@ -210,7 +212,8 @@ async function main() {
     target ??= slugify(p.slug || p.title) || `page-${p.id}`;
     if (RESERVED.has(target)) target = `${target}-page`;
     if (claimed.has(target)) {
-      const alt = `${target}-${p.id}`;
+      let alt = `${target}-${p.id}`;
+      for (let n = 2; claimed.has(alt); n++) alt = `${target}-${p.id}-${n}`;
       notes.push(`Two pages wanted content/${target}.md; "${p.title}" became content/${alt}.md.`);
       target = alt;
     }
@@ -318,10 +321,6 @@ async function main() {
 
     html = autop(html);
 
-    // Heading levels: the page title is the h1, so the top heading becomes h2.
-    const levels = [...html.matchAll(/<h([1-6])\b/gi)].map((m) => Number(m[1]));
-    const shift = levels.length ? 2 - Math.min(...levels) : 0;
-
     // A page that opens with its own h1 gets that as its title.
     let title = p.title || p.slug;
     const lead = html.match(/^\s*(?:<[^>]+>\s*)*?<h1\b[^>]*>([\s\S]*?)<\/h1>/i);
@@ -334,6 +333,11 @@ async function main() {
         html = html.replace(lead[0], "");
       }
     }
+
+    // Heading levels, after the title h1 is gone: the page title is the h1, so
+    // the top remaining heading becomes h2.
+    const levels = [...html.matchAll(/<h([1-6])\b/gi)].map((m) => Number(m[1]));
+    const shift = levels.length ? 2 - Math.min(...levels) : 0;
 
     const td = new TurndownService({
       headingStyle: "atx",
