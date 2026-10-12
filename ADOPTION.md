@@ -9,11 +9,14 @@ domain, the processor account, and (if you chose that path) the AWS account.
 Nothing here is hosted by the party who set it up for you, so nobody else can
 take it down or hold it for ransom.
 
-**Time:** about an hour for the Pages path, often less — but nobody has
-recorded a receipt yet, so treat that as a guess until the table at the bottom
-says otherwise. See [Prerequisites](#prerequisites) for what tends to be slow.
+**Time:** allow about an hour for the Pages path the first time. The one run
+on record took three minutes and one second, for an operator who had the intake
+answers ready and the tooling installed
+([receipt](receipts/2026-10-12-agent-run.md)); the deploy workflow was the
+slowest step at under a minute. See [Prerequisites](#prerequisites) for what
+tends to be slow on a first run.
 
-**Status of this runbook:** never run — see [Receipt](#receipt)
+**Status of this runbook:** run once, 2026-10-12 — see [Receipt](#receipt)
 
 ## What you get
 
@@ -117,14 +120,14 @@ has a check: something concrete you can confirm before moving to the next one.
 
 | Field | Value |
 |---|---|
-| Date | |
-| Operator | |
-| Version tested | |
-| Deploy target | |
-| Total elapsed | |
-| Slowest step | |
-| All checks green | |
-| Notes | |
+| Date | 2026-10-12 |
+| Operator | agent run on the maintainer's personal account ([full receipt](receipts/2026-10-12-agent-run.md)) |
+| Version tested | `dd03018` |
+| Deploy target | GitHub Pages, project site, no custom domain |
+| Total elapsed | 3 min 01 s |
+| Slowest step | the Pages deploy workflow, 55 s |
+| All checks green | Yes; no test donation was made (no processor sandbox), and the `mailto:` link was rendered, not clicked |
+| Notes | Two defects filed: #19 (the first run is red before Pages is enabled) and #20 (`npm run a11y` against the live URL). Our runs are recorded under [`receipts/`](receipts/README.md); this table is yours to overwrite in your copy. |
 
 ## Teardown
 

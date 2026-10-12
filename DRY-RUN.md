@@ -68,6 +68,8 @@ Stop the clock.
 > missing." A project Pages site needs `base: "/<repo>/"`.
 
 Re-running the drill after any template change keeps the recorded time honest.
+Our own runs are recorded under [`receipts/`](receipts/README.md); the tables in
+this file ship blank so they are yours to fill.
 
 ## How you know it worked
 
