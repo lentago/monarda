@@ -1,16 +1,20 @@
 # Adoption receipts
 
-This folder holds monarda's **own** adoption receipts: the record of an operator
-running [`DRY-RUN.md`](../DRY-RUN.md) end to end, from **Use this template** to a
-live site on an account outside this organization, and writing down how long it
-took and whether every check went green.
+This folder holds the receipts from the kit's maintainers running
+[`DRY-RUN.md`](../DRY-RUN.md) end to end, from **Use this template** to a live
+site on an account outside their organization, writing down how long it took
+and whether every check went green. When you run the drill in your own copy,
+you fill the tables in `DRY-RUN.md` and `ADOPTION.md`; if you keep this folder,
+add your run as a new file here too.
 
 A receipt is how a tier claim earns the right to be made. The tier registry in
-[lupinus](https://github.com/lentago/lupinus/blob/main/guide/tiers.md) cites the
-**latest** receipt here as its evidence that this kit is adoptable.
+[lupinus](https://github.com/lentago/lupinus/blob/main/guide/tiers.md) should
+cite the **latest** receipt here as its evidence that this kit is adoptable;
+until it does, its monarda row says the receipt is pending.
 
 The tables inside `DRY-RUN.md` and `ADOPTION.md` are **yours** to fill when you
-run the drill in your own copy; they ship blank on purpose. Our runs live here.
+run the drill in your own copy; they ship blank on purpose. The maintainers' runs
+live here.
 
 ## How to file one
 

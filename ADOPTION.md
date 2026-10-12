@@ -126,8 +126,8 @@ has a check: something concrete you can confirm before moving to the next one.
 | Deploy target | GitHub Pages, project site, no custom domain |
 | Total elapsed | 3 min 01 s |
 | Slowest step | the Pages deploy workflow, 55 s |
-| All checks green | Yes; no test donation was made (no processor sandbox), and the `mailto:` link was rendered, not clicked |
-| Notes | Two defects filed: #19 (the first run is red before Pages is enabled) and #20 (`npm run a11y` against the live URL). Our runs are recorded under [`receipts/`](receipts/README.md); this table is yours to overwrite in your copy. |
+| All checks green | Partly; no test donation was made (no processor sandbox), and the `mailto:` link was rendered, not clicked |
+| Notes | Two defects filed: #19 (the first run is red before Pages is enabled) and #20 (`npm run a11y` against the live URL). The kit maintainers' runs are recorded under [`receipts/`](receipts/README.md); this table is yours to overwrite in your copy. |
 
 ## Teardown
 
