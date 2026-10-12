@@ -142,8 +142,14 @@ In the Cloudflare dashboard, open the Worker's Settings → Variables and add:
 
 So that nothing a volunteer does can go live without you, in the repository's
 Settings → Rules, add a rule for `main` that requires a pull request before
-merging. Write access plus that rule means a volunteer can propose but not
-publish.
+merging **and at least one approving review**, and leave the rule's bypass list
+empty. A pull request alone is not enough: anyone with Write access could merge
+it. With the review required, GitHub will not let a volunteer approve their own
+pull request, so the approval has to come from someone else. If more than one
+volunteer has Write access, also tick **Require review from Code Owners** and
+list yourself in a `CODEOWNERS` file, so an approval from another volunteer
+does not count. Write access plus that rule means a volunteer can propose but
+not publish.
 
 ### 6. Publish the editor
 
