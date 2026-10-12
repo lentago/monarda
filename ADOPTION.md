@@ -41,16 +41,51 @@ the box.
 | Your payment processor account and the money | You |
 | Your AWS account (S3 path only) | You |
 
+## Rung 2: the plain organization site
+
+**Skip this if** one campaign page is all you need. That page is rung 1, the
+default; the kit comes in rungs, steps you take one at a time, and you can
+climb to rung 2 whenever you're ready.
+
+**What you get:** a home page plus about, programs, events, donate, and
+contact pages, with the same header menu and footer on every page. You can
+keep the campaign page as a seventh page at `/campaign/`. Each page is a
+Markdown file in [`content/`](content/README.md), which is plain text with a
+few marks for headings, lists, and links. The donate page uses the same
+processor-hosted button or widget as rung 1, so card data still never touches
+your site.
+
+**What it costs:** the same as rung 1. $0 on GitHub Pages; on S3 +
+CloudFront, AWS charges for a few more small files.
+
+**How long:** no rung-2 run has been timed yet. The setup is the rung-1 drill
+plus one setting, and the rest is writing six short pages, so the honest answer
+depends on how much of that writing you already have. The
+[rung-2 drill](DRY-RUN.md#optional-second-drill--rung-2-the-organization-site)
+is timed on its own clock so this document can give you a real number once
+someone has run it.
+
+**How to switch:** set `rung: 2` in `campaign.config.ts`, fill in the
+`organization` block next to it, then answer the rung-2 questions in
+[`INTAKE.md`](INTAKE.md#7-rung-2--the-organization-site) and put the answers in
+the files in `content/`.
+
+> **Heads up.** Switching moves the campaign off the front page. Links people
+> already shared to your site's address now land on the organization's home
+> page, and the campaign lives at `/campaign/`.
+
 ## What this is not
 
 - **Not a payment processor.** The donate section links to or embeds your
   processor's hosted page. Card data, PCI scope, and the money stay with the
   processor — not with this site.
-- **Not a CMS.** There is no admin panel, no database, and no login. You edit
-  `campaign.config.ts` in the repository and push.
-- **One page, on this rung.** This is a single campaign landing page. A plain
-  organization site (home, about, programs, events, donate, contact) is rung 2,
-  coming, per [ADR-0004](docs/adr/0004-second-rung-the-plain-organization-site.md).
+- **Not a CMS** (a content management system, like WordPress). There is no
+  admin panel, no database, and no login. You edit `campaign.config.ts` (and,
+  on rung 2, the Markdown files in `content/`) in the repository and push.
+- **One page on rung 1; a handful on rung 2.** Rung 1 is a single campaign
+  landing page. Rung 2 is six pages about your organization, per
+  [ADR-0004](docs/adr/0004-second-rung-the-plain-organization-site.md). Neither
+  is meant to grow into a big site.
 
 ## Prerequisites
 
@@ -115,8 +150,9 @@ has a check: something concrete you can confirm before moving to the next one.
 - Click the donate button or widget. You reach your processor's hosted donation
   page.
 - Test contact: click the email link or submit the volunteer form.
-- Run Lighthouse or `npm run a11y` against the live URL. No serious
-  accessibility errors.
+- Run Lighthouse, or `npm run a11y -- <your live URL>` after a local
+  `npm run build` of the same commit. That checks every page the build
+  produced against the live site. No serious accessibility errors.
 
 ## Receipt
 
@@ -152,6 +188,7 @@ To remove the site completely:
 
 - [ ] Every placeholder in `campaign.config.ts` has been replaced with your
       campaign's real content.
+- [ ] On rung 2: no page in `content/` still says "Replace this."
 - [ ] The donate section reaches your processor's hosted page (tested with a
       real click).
 - [ ] The live site loads over HTTPS on your Pages URL or custom domain.

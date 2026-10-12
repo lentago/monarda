@@ -36,13 +36,15 @@ everything you need in one place: what you'll need before you start, the intake
 questions, the deploy drill, and how to take the site down later if you ever
 need to.
 
-**What you get:** one page for your campaign (rung 1; a plain organization site is rung 2, coming, per [ADR-0004](docs/adr/0004-second-rung-the-plain-organization-site.md)), with four sections — a hero (your
+**What you get:** one page for your campaign, with four sections — a hero (your
 campaign name, tagline, goal, deadline, and an optional progress bar), your
 story, a **donate** button or widget hosted by your payment processor, and a
 **contact / volunteer** section. It's built as plain static HTML with system
 fonts, no trackers, and no JavaScript running in anyone's browser, so it loads
 fast and scores well on Lighthouse — Google's page-speed and accessibility
-checker.
+checker. That one page is rung 1. The kit comes in rungs, steps you take one
+at a time, and rung 2 is a plain site for your whole organization; see
+[Rung 2](#rung-2--the-plain-organization-site) below.
 
 **What you own — everything:**
 
@@ -68,13 +70,45 @@ processor, not with this website.
 Everything about your campaign lives in [`campaign.config.ts`](campaign.config.ts):
 name, tagline, goal, deadline, story, colors, donate widget, and contact info.
 Open it, fill in your details, save. The full field reference is in
-[`src/config.ts`](src/config.ts).
+[`src/config.ts`](src/config.ts). On rung 2, the words on each page live in
+[`content/`](content/README.md) as well; the settings stay in this one file.
 
 ```bash
 npm install     # once
 npm run dev     # preview locally at the printed URL
 npm run build   # produce the static site in ./dist
 ```
+
+### Rung 2 — the plain organization site
+
+**Skip this if** one campaign page is all you need. Rung 1 stays the default.
+
+**What you get:** six pages instead of one — home, about, programs, events,
+donate, and contact — with the same header menu and footer on every page. The
+campaign page can stay as a seventh page at `/campaign/`. Each page is a
+Markdown file in [`content/`](content/README.md); Markdown is plain text where
+a line starting with `##` is a heading and `- ` starts a list. The pages ship
+with placeholder text that starts with "Replace this," so you can see what's
+left. The donate page uses the same processor-hosted button or widget as
+rung 1, and the contact page the same email button or form. There's still no
+server, no admin screen, and nothing hosted by anyone but you.
+
+**How to switch:** set `rung: 2` in `campaign.config.ts`, fill in the
+`organization` block next to it, and edit the files in `content/`. To preview
+rung 2 before you commit to it, run `SITE_RUNG=2 npm run dev`.
+
+**What it costs:** the same as rung 1. GitHub Pages is free, and the S3 path
+costs what AWS charges for a handful of small files. The pull-request check
+builds and checks both rungs, which uses a couple of minutes of GitHub Actions
+time per change: free on a public repository, and counted against the monthly
+free allowance on a private one.
+
+**How long:** not timed yet. Rung 2 has its own drill in
+[`DRY-RUN.md`](DRY-RUN.md#optional-second-drill--rung-2-the-organization-site),
+timed separately so the rung-1 number stays honest, and its first receipt will
+go under [`receipts/`](receipts/README.md). The setup steps are the same as
+rung 1; the extra time is writing the pages, and that depends on how much you
+already have written down.
 
 ### Choosing a processor
 
@@ -127,7 +161,8 @@ Two documents drive an engagement with a client:
 2. [`DRY-RUN.md`](DRY-RUN.md) — the timed drill: from a filled intake to a live
    site on the client's own account, with a checklist and a table to record the
    elapsed time. **The recorded time is the receipt.** Run it once before a real
-   engagement to surface the slow steps (DNS, the AWS OIDC role).
+   engagement to surface the slow steps (DNS, the AWS OIDC role). Rung 2 has a
+   second, separately timed drill in the same file.
 
 The delivery rule (ADR-0007, fleet-wide): kits deploy into **client-owned**
 repos/accounts — never Lentago-hosted. That's why both deploy workflows target
@@ -137,10 +172,12 @@ behind the donate-embed and client-ownership design.
 ## What's here
 
 - [`campaign.config.ts`](campaign.config.ts) — the one file a client edits
-- [`src/`](src/) — the Astro site (layout, four section components, styles)
+- [`content/`](content/README.md) — rung 2's pages, one Markdown file each
+- [`src/`](src/) — the Astro site (layouts, section components, styles)
 - [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) — free GitHub Pages deploy
 - [`.github/workflows/deploy-s3.yml`](.github/workflows/deploy-s3.yml) — opt-in S3 + CloudFront deploy (OIDC, no static keys)
-- [`.github/workflows/build-check.yml`](.github/workflows/build-check.yml) — PR gate: type check, build, WCAG 2 AA (pa11y)
+- [`.github/workflows/build-check.yml`](.github/workflows/build-check.yml) — PR gate: type check, build, WCAG 2 AA (pa11y) on every page, for both rungs
+- [`ci/a11y.mjs`](ci/a11y.mjs) — `npm run a11y`: checks every page the last build produced, locally or live
 - [`INTAKE.md`](INTAKE.md) · [`DRY-RUN.md`](DRY-RUN.md) — intake questionnaire and timed runbook
 - [`docs/adr/`](docs/adr/) — architecture decision records
 

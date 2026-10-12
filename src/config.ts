@@ -74,7 +74,29 @@ export interface StoryBlock {
   paragraphs: string[];
 }
 
+/**
+ * Rung 2 only: who the organization is. On rung 1 this block is ignored.
+ * The pages themselves are Markdown files in `content/` (see content/README.md).
+ */
+export interface OrganizationConfig {
+  /** Organization name — shown in the header and browser tab on every page. */
+  name: string;
+  /** One line about the organization, used as the default page description. */
+  tagline: string;
+  /** Keep the rung-1 campaign page as one of the pages, at /campaign/. */
+  campaignPage: boolean;
+}
+
 export interface CampaignConfig {
+  // --- Which site ---------------------------------------------------------------
+  /** 1 = the one-page campaign site (the default). 2 = the plain organization
+   *  site: home, about, programs, events, donate, and contact pages written in
+   *  Markdown under `content/`, with a shared header and footer. Donate,
+   *  contact, colors, `siteUrl`, and `base` below apply to both rungs. */
+  rung: 1 | 2;
+  /** Rung 2 only. Falls back to `name` and `tagline` if omitted. */
+  organization?: OrganizationConfig;
+
   // --- Identity ---------------------------------------------------------------
   /** Campaign name — shown in the header, hero, and browser tab. */
   name: string;
@@ -129,6 +151,24 @@ export interface CampaignConfig {
   footerNote?: string;
   /** Optional social / press links shown in the footer. */
   links?: NamedLink[];
+}
+
+/**
+ * The rung this build renders. The SITE_RUNG environment variable, when set to
+ * 1 or 2, overrides `rung` for one build without editing the config: CI uses it
+ * to check both rungs, and `SITE_RUNG=2 npm run dev` previews rung 2.
+ */
+export function siteRung(cfg: CampaignConfig): 1 | 2 {
+  const override = process.env.SITE_RUNG;
+  if (override === "1" || override === "2") return Number(override) as 1 | 2;
+  return cfg.rung === 2 ? 2 : 1;
+}
+
+/** The organization block for rung 2, falling back to the campaign identity. */
+export function organization(cfg: CampaignConfig): OrganizationConfig {
+  return (
+    cfg.organization ?? { name: cfg.name, tagline: cfg.tagline, campaignPage: true }
+  );
 }
 
 /**

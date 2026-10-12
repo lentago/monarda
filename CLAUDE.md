@@ -32,11 +32,13 @@ processor-hosted widget and never touches card data.
 | Path | Purpose |
 |---|---|
 | `campaign.config.ts` | The single file a client edits (name/goal/colors/donate/contact). |
-| `src/config.ts` | Typed schema + docs for the config; rarely edited. |
-| `src/` | Astro site: `layouts/Base.astro`, four section components, `styles/global.css`. |
+| `src/config.ts` | Typed schema + docs for the config; rarely edited. `rung: 1 \| 2` picks the site; `SITE_RUNG` env overrides it per build. |
+| `content/` | Rung 2's Markdown pages (home, about, programs, events, donate, contact); ignored on rung 1. |
+| `src/` | Astro site: `layouts/Base.astro` + `OrgPage.astro`, rung-1 section components, rung-2 header/footer, `styles/global.css`. |
+| `ci/a11y.mjs` | `npm run a11y`: pa11y on every page the last build recorded, locally or `-- <live-url>`. |
 | `.github/workflows/deploy-pages.yml` | Free GitHub Pages deploy (the default). |
 | `.github/workflows/deploy-s3.yml` | Opt-in S3 + CloudFront deploy via OIDC — no static AWS keys. |
-| `.github/workflows/build-check.yml` | PR gate: `astro check`, build, pa11y WCAG 2 AA. |
+| `.github/workflows/build-check.yml` | PR gate, once per rung: `astro check`, build, pa11y WCAG 2 AA on every page. |
 | `INTAKE.md` / `DRY-RUN.md` | Client questionnaire and the timed deploy drill. |
 | `docs/adr/` | Architecture decision records. |
 
