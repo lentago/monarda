@@ -56,11 +56,16 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh api "repos/${GITHUB_REPOSITORY}/pages" --silent 2>/dev/null; then
+          # 404 means "no Pages site here": skip, green. Any other error fails
+          # the run rather than silently skipping a deploy.
+          if err=$(gh api "repos/${GITHUB_REPOSITORY}/pages" --silent 2>&1); then
             echo "enabled=true" >> "$GITHUB_OUTPUT"
-          else
+          elif grep -q 'HTTP 404' <<<"$err"; then
             echo "enabled=false" >> "$GITHUB_OUTPUT"
             echo "::notice title=Pages not enabled::GitHub Pages is not enabled for ${GITHUB_REPOSITORY}, so the deploy was skipped. Enable it under Settings → Pages → Build and deployment → Source: GitHub Actions, then push again."
+          else
+            echo "$err" >&2
+            exit 1
           fi
 
   build:
