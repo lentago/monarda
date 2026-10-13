@@ -12,6 +12,11 @@
 #      domain, `base: "/"`.
 #   3. Push to `main`. That's it.
 #
+# Until step 1 is done, a push to `main` finds no Pages site, skips the build
+# and deploy, and stays green (a notice in the run says what to enable). The
+# kit's own copy therefore never shows a failing deploy on a repo that was
+# never meant to publish (lentago/monarda#32).
+#
 # All third-party actions are pinned to a full commit SHA (supply-chain hygiene);
 # the trailing comment records the human-readable version each SHA maps to.
 # ============================================================================
@@ -36,7 +41,31 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Is GitHub Pages enabled for this repository? configure-pages fails hard when
+  # it is not, so probe first and skip cleanly. The probe uses only the
+  # workflow token with pages: read; it never creates a site.
+  pages:
+    runs-on: ubuntu-latest
+    permissions:
+      pages: read
+    outputs:
+      enabled: ${{ steps.probe.outputs.enabled }}
+    steps:
+      - name: Check whether Pages is enabled
+        id: probe
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh api "repos/${GITHUB_REPOSITORY}/pages" --silent 2>/dev/null; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Pages not enabled::GitHub Pages is not enabled for ${GITHUB_REPOSITORY}, so the deploy was skipped. Enable it under Settings → Pages → Build and deployment → Source: GitHub Actions, then push again."
+          fi
+
   build:
+    needs: pages
+    if: needs.pages.outputs.enabled == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
