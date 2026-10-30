@@ -26,6 +26,12 @@ receipt. Fill in the table at the bottom when you're done.
 
 Start the clock. Record the elapsed time at each checkpoint.
 
+> **Heads up (step 1).** Creating the repo from the template pushes an initial
+> commit, so `deploy-pages.yml` runs once before Pages exists. It finds no
+> Pages site and skips the deploy, with a notice in the run. That first run is
+> expected, not a failure. The site goes live after step 7 enables Pages and
+> step 9 pushes (or re-run the workflow from the Actions tab).
+
 | # | Step | Check it's green | ✅ |
 |---|---|---|---|
 | 1 | **Create the repo** from this template ("Use this template") into the client's account, and clone it. | `git clone` succeeds; repo is under the client org. | |
