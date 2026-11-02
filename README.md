@@ -148,7 +148,11 @@ form embed (Google Forms, Tally, Jotform) into `contact.formEmbedHtml`.
 - **GitHub Pages — free, the default.** GitHub's own free static-site hosting.
   In your repo, go to Settings → Pages → Source = *GitHub Actions*, then push
   to `main`. [`deploy-pages.yml`](.github/workflows/deploy-pages.yml) builds
-  and publishes it for you. For a project site (`you.github.io/repo/`), set
+  and publishes it for you. The run triggered by creating the repo from the
+  template skips the deploy, because Pages isn't enabled yet. It says so in a
+  notice, and the next push after you enable Pages publishes. A workflow can't
+  switch Pages on itself with its built-in token, so this is a one-time
+  setting you make. For a project site (`you.github.io/repo/`), set
   `base: "/repo/"` in the config.
 - **S3 + CloudFront — the paid variant.** Amazon's storage and
   content-delivery services, for a custom domain with a CDN — a network of
