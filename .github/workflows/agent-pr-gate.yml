@@ -22,10 +22,13 @@
 # your pull requests merge.
 #
 # Deliberately NOT path-filtered: a required check whose workflow never triggers
-# is held "Expected" forever. The script is checked out from the PR's BASE
-# commit, never the PR head, so a pull request can't edit the script that
-# judges it. The check on the PR that first adds this file fails closed, since
-# its base has no script yet.
+# is held "Expected" forever. The script is checked out from the BASE BRANCH
+# (`base.ref`), never the PR head, so a pull request can't edit the script that
+# judges it. It is the base branch's current tip, not `base.sha`: `base.sha` is
+# frozen at the PR's last update, so a PR opened before this script landed on
+# the base would find no script at its frozen base and fail closed even after a
+# human approves the head. The check on the PR that first adds this file still
+# fails closed, since the base branch has no script yet.
 # ============================================================================
 
 name: agent-pr-gate
@@ -75,7 +78,7 @@ jobs:
         if: steps.who.outputs.gated == 'true'
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: ${{ github.event.pull_request.base.sha }}
+          ref: ${{ github.event.pull_request.base.ref }}
           path: .agent-pr-gate-tooling
           sparse-checkout: ci
           fetch-depth: 1
