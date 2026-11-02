@@ -1,0 +1,103 @@
+# ============================================================================
+# agent-pr-gate — hold the bullpen's runner-App pull requests for a person
+# ============================================================================
+# Vendored from lentago/shared-workflows at v1.6.0, commit
+# 36d432c2530a5880a464050a6b74ccb217266f1e: ci/agent_pr_gate.py and
+# ci/test_agent_pr_gate.py are byte-for-byte copies, and the steps below do what
+# that release's agent-pr-gate.yml does. There is no `uses:` of anything under
+# lentago/. When a shared-workflows release changes the script or the steps,
+# update this copy and move this header to the new tag and commit.
+#
+# The job's `name:` is pinned to "agent-pr-gate / agent-pr-gate" — a required
+# status check context in Lentago's rulesets. Changing it deadlocks every PR.
+#
+# What it does: a pull request authored by lentago-claude-runner[bot] passes
+# only when a person with write access has approved its current head (or, for an
+# armed PR, the cr-automerge record names that head). Any other author passes at
+# once, without an API call.
+#
+# IF YOU COPIED THIS KIT: no pull request in your repository is authored by
+# lentago-claude-runner[bot], so this check passes every pull request at once
+# and reads nothing. It costs one fast green check and changes nothing about how
+# your pull requests merge.
+#
+# Deliberately NOT path-filtered: a required check whose workflow never triggers
+# is held "Expected" forever. The script is checked out from the PR's BASE
+# commit, never the PR head, so a pull request can't edit the script that
+# judges it. The check on the PR that first adds this file fails closed, since
+# its base has no script yet.
+# ============================================================================
+
+name: agent-pr-gate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited, ready_for_review, auto_merge_enabled]
+  pull_request_review:
+    types: [submitted, dismissed]
+
+jobs:
+  agent-pr-gate:
+    name: agent-pr-gate / agent-pr-gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+    # One evaluation per head commit at a time. Events for the same head queue
+    # behind the running one, never cancel it: a run waiting for cr-automerge's
+    # record must finish, and the last queued run then reads the latest state.
+    concurrency:
+      group: agent-pr-gate-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.sha }}
+      cancel-in-progress: false
+    env:
+      AGENT: lentago-claude-runner[bot]
+
+    steps:
+      - name: Is this PR gated?
+        id: who
+        env:
+          NUMBER: ${{ github.event.pull_request.number }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: |
+          if [[ -z "$NUMBER" ]]; then
+            echo "::error::agent-pr-gate runs on pull_request and pull_request_review events; this event carries no pull request"
+            exit 1
+          fi
+          if [[ "${AUTHOR,,}" != "${AGENT,,}" ]]; then
+            echo "PR #$NUMBER is authored by $AUTHOR, not $AGENT: nothing to gate."
+            echo "gated=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "gated=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout agent-pr-gate script from the base commit
+        if: steps.who.outputs.gated == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: .agent-pr-gate-tooling
+          sparse-checkout: ci
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Check approval or routine record
+        if: steps.who.outputs.gated == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          ACTION: ${{ github.event.action }}
+          ARMED: ${{ github.event.pull_request.auto_merge && 'armed' || '' }}
+        run: |
+          # cr-automerge arms first and posts its record a moment later. Any run
+          # on an armed PR (the run arming triggers, or one queued behind it)
+          # waits up to two minutes for a record of this head; an approval or a
+          # record already in place ends the wait at once.
+          WAIT=0
+          [[ "$ACTION" == auto_merge_enabled || -n "$ARMED" ]] && WAIT=120
+          python3 .agent-pr-gate-tooling/ci/agent_pr_gate.py \
+            --repo "$REPO" --pr "$NUMBER" --head-sha "$HEAD_SHA" \
+            --author "$AUTHOR" --agent "$AGENT" --wait-for-marker "$WAIT"
