@@ -1,0 +1,44 @@
+# ============================================================================
+# template-update-check — the update door's tests
+# ============================================================================
+# Runs ci/test_template_update.py when a pull request changes the update door:
+# scripts/template-update.py, its workflow, its config, or the tests. The
+# tests build throwaway git repositories on the runner and fetch nothing.
+#
+# IF YOU COPIED THIS KIT: this job runs only in the template repository
+# (lentago/monarda) and shows as skipped in yours. Your copy's door arrives in
+# template-update pull requests already tested there, and the tests hold the
+# template's default keep list, while yours is yours to change.
+#
+# Not a required status check: it is path-filtered, and a path-filtered
+# required check that never fires deadlocks pull requests (see docs-check.yml).
+# ============================================================================
+
+name: template-update-check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - "scripts/template-update.py"
+      - ".github/template-update.toml"
+      - ".github/workflows/template-update.yml"
+      - ".github/workflows/template-update-check.yml"
+      - "ci/test_template_update.py"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: template-update tests
+    if: github.repository == 'lentago/monarda'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Run the update door's tests
+        run: python3 ci/test_template_update.py -v

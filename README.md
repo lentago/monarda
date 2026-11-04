@@ -164,6 +164,16 @@ form embed (Google Forms, Tally, Jotform) into `contact.formEmbedHtml`.
   cache. It ships switched off until you fill in four clearly-marked
   placeholders. This option costs money on AWS; Pages doesn't.
 
+### Getting later kit changes
+
+Your repository is a copy of the template, so it doesn't hear about later fixes
+on its own. [`template-update.yml`](.github/workflows/template-update.yml)
+checks every Monday and opens a pull request in your repository with the
+template's changes, merged with yours. Your pages in `content/` are never
+touched, and nothing changes until you merge. It needs one token from you,
+about three minutes once: see
+[Getting later template changes](ADOPTION.md#getting-later-template-changes).
+
 ## For the operator — running the dry-run
 
 Two documents drive an engagement with a client:
@@ -189,6 +199,7 @@ behind the donate-embed and client-ownership design.
 - [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) — free GitHub Pages deploy
 - [`.github/workflows/deploy-s3.yml`](.github/workflows/deploy-s3.yml) — opt-in S3 + CloudFront deploy (OIDC, no static keys)
 - [`.github/workflows/build-check.yml`](.github/workflows/build-check.yml) — PR gate: type check, build, WCAG 2 AA (pa11y) on every page, for both rungs
+- [`.github/workflows/template-update.yml`](.github/workflows/template-update.yml) — weekly: the template's later changes, as a pull request in your repository ([how](ADOPTION.md#getting-later-template-changes))
 - [`scripts/rescue-import.mjs`](scripts/rescue-import.mjs) — `npm run rescue-import`: WordPress/Squarespace export to rung-2 pages ([runbook](docs/rescue-import.md))
 - [`ci/a11y.mjs`](ci/a11y.mjs) — `npm run a11y`: checks every page the last build produced, locally or live
 - [`INTAKE.md`](INTAKE.md) · [`DRY-RUN.md`](DRY-RUN.md) — intake questionnaire and timed runbook

@@ -17,6 +17,7 @@ any one campaign that uses it.
 | [0002](0002-processor-hosted-payments-only.md) | Donations go through a processor-hosted widget; the kit never touches card data | Accepted | 2026-08-17 |
 | [0003](0003-pages-default-s3-opt-in.md) | GitHub Pages is the default deploy; S3 + CloudFront is the opt-in paid variant | Accepted | 2026-08-17 |
 | [0004](0004-second-rung-the-plain-organization-site.md) | A second rung, the plain organization site; the campaign page stays rung 1 | Accepted | 2026-10-12 |
+| [0005](0005-template-updates-through-an-update-door.md) | Later template changes reach a copy through an update door the client owns | Accepted | 2026-11-04 |
 
 ---
 

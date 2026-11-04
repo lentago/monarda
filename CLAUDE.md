@@ -39,6 +39,7 @@ processor-hosted widget and never touches card data.
 | `.github/workflows/deploy-pages.yml` | Free GitHub Pages deploy (the default). |
 | `.github/workflows/deploy-s3.yml` | Opt-in S3 + CloudFront deploy via OIDC — no static AWS keys. |
 | `.github/workflows/build-check.yml` | PR gate, once per rung: `astro check`, build, pa11y WCAG 2 AA on every page. |
+| `.github/workflows/template-update.yml`, `scripts/template-update.py`, `.github/template-update.toml` | The update door (ADR-0005): weekly in a copy, opens one PR with the template's later changes, using the client's `TEMPLATE_UPDATE_TOKEN`. The script is a byte-for-byte copy of uvularia's: fix it there and copy it back. `template-update-check.yml` runs `ci/test_template_update.py`, in this repo only. |
 | `editor/sveltia/` | Off-by-default Sveltia CMS config for rung 2; the build ignores it until copied to `public/admin/` (see `docs/editing-without-git.md`). |
 | `INTAKE.md` / `DRY-RUN.md` | Client questionnaire and the timed deploy drill. |
 | `docs/adr/` | Architecture decision records. |
