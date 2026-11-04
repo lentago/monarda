@@ -78,6 +78,11 @@ time is recorded separately so the rung-1 number stays honest.
       account, with donate and contact wired.
 - [ ] Section 7 of [`INTAKE.md`](INTAKE.md) is filled in, with the words for
       each page.
+- [ ] The copy has rung 2: a `content/` folder, and `rung` in
+      `campaign.config.ts`. A copy made before the template had rung 2 takes it
+      first, through
+      [Getting later template changes](ADOPTION.md#getting-later-template-changes).
+      Time that on its own, not on this clock.
 
 | # | Step | Check it's green | Elapsed | ✅ |
 |---|---|---|---|---|

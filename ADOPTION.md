@@ -58,12 +58,13 @@ your site.
 **What it costs:** the same as rung 1. $0 on GitHub Pages; on S3 +
 CloudFront, AWS charges for a few more small files.
 
-**How long:** no rung-2 run has been timed yet. The setup is the rung-1 drill
-plus one setting, and the rest is writing six short pages, so the honest answer
-depends on how much of that writing you already have. The
+**How long:** the one rung-2 run on record took 5 min 03 s, for an operator
+who had the words for each page ready before the clock started
+([receipt](receipts/2026-11-04-agent-run-rung-2.md)). The Pages deploy was the
+slowest step, at 3 min 34 s. Writing six short pages is the rest of the work,
+so allow for it if the words aren't written yet. The
 [rung-2 drill](DRY-RUN.md#optional-second-drill--rung-2-the-organization-site)
-is timed on its own clock so this document can give you a real number once
-someone has run it.
+is timed on its own clock, apart from rung 1.
 
 **How to switch:** set `rung: 2` in `campaign.config.ts`, fill in the
 `organization` block next to it, then answer the rung-2 questions in
@@ -170,6 +171,104 @@ has a check: something concrete you can confirm before moving to the next one.
 | Slowest step | the Pages deploy workflow, 55 s |
 | All checks green | Partly; no test donation was made (no processor sandbox), and the `mailto:` link was rendered, not clicked |
 | Notes | Two defects filed: #19 (the first run is red before Pages is enabled) and #20 (`npm run a11y` against the live URL). The kit maintainers' runs are recorded under [`receipts/`](receipts/README.md); this table is yours to overwrite in your copy. |
+
+## Getting later template changes
+
+**What you're about to do:** let your copy receive the kit's later fixes (a
+repaired workflow, a clearer guide, a new setting) as a pull request in your own
+repository, which you review and merge like any other.
+
+**Why bother:** a repository made with **Use this template** is a copy with no
+link back to the template, so `git pull` can't bring later changes in. Without
+this, your copy never hears about a fix. With it, a pull request shows up when
+the template has changed, your checks run on it, and the diff shows every line.
+
+**How long:** about three minutes, once.
+
+**Skip this if** you would rather copy changes by hand. Nothing breaks if you
+never set this up: the workflow opens an issue saying an update is waiting, and
+stays green.
+
+1. **Make a token.** A token is a password for one program, with only the
+   powers you give it. On GitHub, open your picture → **Settings → Developer
+   settings → Personal access tokens → Fine-grained tokens → Generate new
+   token**. Set **Resource owner** to the account or organization that owns
+   your site's repository, **Repository access** to *Only select repositories*
+   and pick this one repository, and under **Repository permissions** set
+   **Contents**, **Pull requests** and **Workflows** to *Read and write*. Pick
+   an expiry date and put it in your calendar.
+2. **Give it to the repository.** In the repository, **Settings → Secrets and
+   variables → Actions → New repository secret**. Name it
+   `TEMPLATE_UPDATE_TOKEN` and paste the token. GitHub never shows it again,
+   and the workflow uses it only to push the update branch and open the pull
+   request.
+3. **Run it once.** **Actions → template-update → Run workflow**. After that it
+   runs every Monday on its own.
+
+> **Heads up.** An organization may need to allow fine-grained tokens, or
+> approve this one, before it works. An organization owner does that under the
+> organization's **Settings → Personal access tokens**. While the token is
+> pending, the run fails with a refused push.
+
+**How you know it worked:** the run ends green, and either it says your copy is
+already up to date or a pull request titled **Template update: …** is open, with
+your checks running on it. Its description lists every file it changed and why.
+
+**What the pull request changes.** For each file,
+[`scripts/template-update.py`](scripts/template-update.py) compares three
+versions: the template at your last update, the template now, and yours.
+
+| If… | then |
+| :-- | :-- |
+| you never changed the file | it becomes the template's new version |
+| the template didn't change it | yours stays exactly as it is |
+| you both changed it, on different lines | the two are merged and both changes are kept |
+| you both changed the same lines | both versions are left in the file between `<<<<<<<` and `>>>>>>>` markers, the pull request opens as a draft, and its description names the files. Keep what you want, delete the markers, and push to the pull request's branch |
+| the template removed it | it is removed, unless you had changed it; then it stays and is listed |
+
+`campaign.config.ts` is merged this way, on purpose. When the kit gains a
+setting (rung 2 added `rung` and `organization`), the update brings the new
+setting in and every value you filled in stays yours. A placeholder you never
+replaced follows the template.
+
+**What it never touches:** your pages in `content/`, your reviewers in
+`.github/CODEOWNERS`, and `LICENSE`. Files you added yourself, such as images in
+`public/`, aren't part of the template, so an update never touches them either.
+The list is `keep` in [`.github/template-update.toml`](.github/template-update.toml).
+That file is yours, and an update never changes it, so add a path when you've
+made a template file your own.
+
+> **Heads up.** While an update pull request is open, no new one opens. Closing
+> one without merging means "not this one": that update isn't offered again,
+> and the next change to the template opens a fresh pull request. Delete its
+> `template-update/…` branch if you change your mind.
+
+> **Heads up.** The usual conflict is a pinned action line in
+> `.github/workflows/`: your copy's Dependabot bumped it, and the template
+> bumped it to a different version. Keep the newer one.
+
+**Made your copy before November 2026?** If it has no
+`.github/workflows/template-update.yml`, it was made before the kit had one.
+Copy three files from the template into it:
+`.github/workflows/template-update.yml`, `scripts/template-update.py` and
+`.github/template-update.toml`. Commit them, then follow the steps above.
+
+- **Which template version did your copy start from?** You don't need to know.
+  **Use this template** makes a first commit holding exactly the template's
+  files, and the first run finds the template commit that matches it. To see
+  it before you make a token, run `python3 scripts/template-update.py --dry-run`
+  in a clean checkout (Python 3.11 or newer). It prints that commit, marked
+  `inferred`, and every file it would change, and changes nothing.
+- **Already brought template changes in by hand?** Before the first run, write
+  the template commit you caught up to into `.github/template-base`, on a line
+  of its own, and commit it. The update then starts from that commit instead of
+  the one your copy was made from.
+- **Never want a token?** Run `python3 scripts/template-update.py` yourself. It
+  stages the same update without committing anything. Check it with
+  `git diff --cached`, then commit and push.
+
+Why it works this way is recorded in
+[ADR-0005](docs/adr/0005-template-updates-through-an-update-door.md).
 
 ## Teardown
 
