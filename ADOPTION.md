@@ -208,7 +208,7 @@ stays green.
 > **Heads up.** An organization may need to allow fine-grained tokens, or
 > approve this one, before it works. An organization owner does that under the
 > organization's **Settings → Personal access tokens**. While the token is
-> pending, the run fails with a refused push.
+> pending, the run fails with an error that names `TEMPLATE_UPDATE_TOKEN`.
 
 **How you know it worked:** the run ends green, and either it says your copy is
 already up to date or a pull request titled **Template update: …** is open, with
@@ -259,6 +259,11 @@ Copy three files from the template into it:
   it before you make a token, run `python3 scripts/template-update.py --dry-run`
   in a clean checkout (Python 3.11 or newer). It prints that commit, marked
   `inferred`, and every file it would change, and changes nothing.
+- **Made it before rung 2?** If your copy has no `content/` folder, an update
+  won't add one, because `content/` is on your keep list. Copy the folder in
+  once, then commit it:
+  `git fetch https://github.com/lentago/monarda.git main && git checkout FETCH_HEAD -- content/`.
+  The update brings the rung-2 settings into `campaign.config.ts` as usual.
 - **Already brought template changes in by hand?** Before the first run, write
   the template commit you caught up to into `.github/template-base`, on a line
   of its own, and commit it. The update then starts from that commit instead of

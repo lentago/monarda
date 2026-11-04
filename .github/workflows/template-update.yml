@@ -4,8 +4,8 @@
 # This repository started as a copy of a template. Once a week, and whenever
 # you run it from the Actions tab, this workflow:
 #
-#   1. stops if an update pull request is already open (one at a time: merge
-#      or close it and the next run opens a fresh one);
+#   1. stops if an update pull request is already open (one at a time: once
+#      you merge or close it, the next template change opens a new one);
 #   2. runs scripts/template-update.py, which fetches the template named in
 #      .github/template-update.toml and makes its changes since your last
 #      update here, leaving alone every path on that file's `keep` list;
@@ -72,7 +72,7 @@ jobs:
                  -q '[.[] | select(.headRefName | startswith("template-update/"))][0].number // empty')"
           echo "number=$n" >> "$GITHUB_OUTPUT"
           if [ -n "$n" ]; then
-            echo "::notice title=template-update::Update pull request #$n is still open. Merge or close it; the next run opens a fresh one."
+            echo "::notice title=template-update::Update pull request #$n is still open. Merge or close it; the next template change after that opens a new one."
           fi
 
       - name: Bring the template's changes into this checkout

@@ -80,9 +80,10 @@ time is recorded separately so the rung-1 number stays honest.
       each page.
 - [ ] The copy has rung 2: a `content/` folder, and `rung` in
       `campaign.config.ts`. A copy made before the template had rung 2 takes it
-      first, through
-      [Getting later template changes](ADOPTION.md#getting-later-template-changes).
-      Time that on its own, not on this clock.
+      first: a template update brings the settings, and the `content/` folder is
+      copied in once by hand, as
+      [Getting later template changes](ADOPTION.md#getting-later-template-changes)
+      says. Time that on its own, not on this clock.
 
 | # | Step | Check it's green | Elapsed | ✅ |
 |---|---|---|---|---|

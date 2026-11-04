@@ -88,10 +88,13 @@ files in the copy and call no workflow in a Lentago repository, the rule
 - A copy made before the door installs it once, by copying the three files from
   the template. A copy that already took template changes by hand records the
   commit it caught up to in `.github/template-base` first.
+- An update never adds a kept path. A copy made before rung 2 has no `content/`
+  folder, so it copies the folder in once by hand, and the update brings the
+  rung-2 settings.
 - In `lentago/monarda` itself the weekly run sees it is the template and does
   nothing.
-- The token expires on the date its owner chose. When it does, the push is
-  refused and the run fails with a message saying to make a new one.
+- The token expires on the date its owner chose. When it does, the run fails
+  with a message that names the token and says to make a new one.
 - A copy's own Dependabot and the template both bump pinned actions. When they
   bump the same line to different versions, that line is a conflict for the
   client to resolve.
