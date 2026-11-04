@@ -16,7 +16,7 @@ tracked in [#39](https://github.com/lentago/monarda/issues/39).
 | Deploy target | GitHub Pages (project site, `base: "/pennywell-winter-shelves/"`) |
 | Pages built | 7: home, about, programs, events, donate, contact, and the campaign at `/campaign/` |
 | **Total elapsed time, rung 2** | **5 min 03 s** |
-| All checks green? | Yes, with two caveats on step E, recorded below |
+| All checks green? | Partly: every check's condition was met, but step E was checked headlessly instead of clicked through, and no test donation was made. Both are recorded below |
 | Slowest step | step D, the Pages deploy: 3 min 34 s from push to green. The workflow's deploy job alone took 2 min 37 s |
 | Live URL | https://cpitzi.github.io/pennywell-winter-shelves/ |
 
@@ -29,10 +29,12 @@ mistakes a drill for a real pantry.
 The copy was created from the template at `dd03018`, before rung 2 merged. It
 had no `content/` folder and no `rung` setting, and the drill assumes both. So
 the copy was first brought up to `0eb8d7b` and that work was timed on its own,
-not on the drill clock. The template diff `dd03018..0eb8d7b` went in as one
-patch (49 files, about 3,400 lines). `campaign.config.ts` was merged by hand so
-it gained the `rung` and `organization` block and kept the drill's values. The
-site stayed on rung 1.
+not on the drill clock. The template diff `dd03018..0eb8d7b` (50 files, 3,389
+lines added and 65 removed) went in as one patch. The catch-up commit touched
+49 of those files. The fiftieth, a one-line change to `deploy-s3.yml`, was
+already in the copy, because the copy's own Dependabot had made the same bump.
+`campaign.config.ts` was merged by hand so it gained the `rung` and
+`organization` block and kept the drill's values. The site stayed on rung 1.
 
 | Checkpoint | Elapsed | Note |
 |---|---|---|
@@ -40,7 +42,7 @@ site stayed on rung 1.
 | Template diff applied | 0:06 | |
 | Built | 0:35 | |
 | Committed, ready to push | 1:18 | commit [`3599d14`](https://github.com/cpitzi/pennywell-winter-shelves/commit/3599d14) |
-| Push to deploy green | 2:15 more | the workflow ran 1 min 49 s. The push itself waited on a permission decision on the operator's side, which is not a kit step and is not counted |
+| Push to deploy green | 2:15 more | timed from the push. The workflow ran 1 min 49 s; the rest is 18 s for the run to start and 8 s for the watch to report. The push came 1 h 45 min after the commit, held for a permission decision on the operator's side. That wait is not a kit step and is not in any figure here |
 
 After that deploy the live URL still served the rung-1 campaign page.
 
@@ -53,12 +55,12 @@ After that deploy the live URL still served the rung-1 campaign page.
 | B the six pages filled from the intake | 0:17 | 8 s | `grep -l "Replace this" content/*.md` listed only `content/README.md`. No page was deleted |
 | C `npm run build` | 0:30 | 13 s | 7 pages built |
 | C `npm run check` | 0:33 | 3 s | 0 errors, 0 warnings, 0 hints |
-| C `npm run a11y` | 0:45 | 12 s | 7 of 7 pages, WCAG 2 AA, **0 errors** |
+| C `npm run a11y` | 0:45 | 12 s | 7 of 7 pages, WCAG 2 AA, **0 errors**; the command exited 0 |
 | D commit | 0:53 | 8 s | |
 | D push to `main` | 1:01 | 8 s | |
-| D deploy workflow green | 4:35 | 3 min 34 s | the run took 3 min 14 s (build 22 s, deploy 2 min 37 s); the rest is the wait for the run to start |
+| D deploy workflow green | 4:35 | 3 min 34 s | the run took 3 min 14 s: the `pages` job 3 s, build 22 s, deploy 2 min 37 s, and 12 s queued between jobs. The other 20 s is 19 s for the run to start and 1 s for the watch to report |
 | E every page in the menu, and the donate click-through | 4:46 | 11 s | all 7 pages returned 200 over HTTPS, each with the header, the footer, and its own heading. Donate reached `paypal.com/donate` |
-| F `npm run a11y -- https://cpitzi.github.io/pennywell-winter-shelves/` | 5:03 | 17 s | 7 of 7 live pages, **0 errors** |
+| F `npm run a11y -- https://cpitzi.github.io/pennywell-winter-shelves/` | 5:03 | 17 s | 7 of 7 live pages, **0 errors**; the command exited 0. The rung-1 receipt's exit-2 defect against a live URL ([#20](https://github.com/lentago/monarda/issues/20), closed) did not recur |
 
 ## Caveats on step E
 
