@@ -23,5 +23,9 @@ live here.
 2. Copy the latest receipt here to `receipts/<YYYY-MM-DD>-<operator>.md` and
    replace its values with yours.
 3. Commit it in a pull request. Receipts are **append-only**: file a new one for
-   each run; never edit or delete a past receipt. The history of runs is itself
-   evidence that the time stays honest across template changes.
+   each run; never change or delete what a past receipt records. The history of
+   runs is itself evidence that the time stays honest across template changes.
+4. If the live site a past receipt points at changes later (a later drill
+   switches it to another rung, say), add a dated note at the top of that
+   receipt saying what moved, when, and which commit the receipt was taken at.
+   Leave everything it recorded as it was.
