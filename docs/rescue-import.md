@@ -34,7 +34,7 @@ Wix, Weebly, or Google Sites move yet. Your own pages may take more or less.
 
 ## Before you start
 
-**You'll need:** this repository (your copy of the template), Node.js 20 or
+**You'll need:** this repository (your copy of the template), Node.js 22.19 or
 newer, and a login to the old site. Run `npm install` once.
 
 **Skip this if** your site has under three pages of real content. Typing them

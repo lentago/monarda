@@ -20,7 +20,7 @@ receipt. Fill in the table at the bottom when you're done.
       one — this deploys to their account by design).
 - [ ] Processor account exists and you have an embed snippet **or** a donate URL.
 - [ ] If deploying to S3: you have access to the client's AWS account.
-- [ ] Node 20+ and git installed locally.
+- [ ] Node 22.19+ and git installed locally.
 
 ## The drill
 

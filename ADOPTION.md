@@ -101,7 +101,7 @@ Weebly, Google Sites, and a site you've lost access to.
   with an embed snippet **or** a donate URL ready to paste.
 - If deploying to S3 + CloudFront: access to an AWS account you control.
 
-**Tools:** Node 20+ and git, installed locally.
+**Tools:** Node 22.19+ and git, installed locally.
 
 **Access you must already have:** permission to enable GitHub Pages and GitHub
 Actions in the target repository.
